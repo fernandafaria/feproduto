@@ -1,0 +1,3 @@
+# Context Strategy — conflict_resolver_agent
+
+Loads: subscription registry, recent event metadata, intent stream samples.

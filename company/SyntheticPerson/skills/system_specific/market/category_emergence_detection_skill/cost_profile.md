@@ -1,0 +1,3 @@
+# Cost Profile — category_emergence_detection_skill
+
+Declared cost cap; calibrated cost surfaces in learning system.

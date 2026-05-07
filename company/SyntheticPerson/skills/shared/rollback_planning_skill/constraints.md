@@ -1,0 +1,3 @@
+# Constraints — rollback_planning_skill
+
+Bounded compute; no privileged writes; provenance complete.
