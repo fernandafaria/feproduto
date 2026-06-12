@@ -1,5 +1,8 @@
 name: firsthand
 region: nyc
+domains:
+  - domain: postaicompany.com
+    type: PRIMARY
 static_sites:
   - name: site
     github:
