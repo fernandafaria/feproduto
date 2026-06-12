@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cohort — firsthand</title>
+<style>
+  :root { --bg: #08080c; --surface: #111118; --border: #1e1e2a; --text: #e5e5e9; --muted: #6b6b7b; --accent: #f5f5f5; --green: #34d399; --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; --mono: 'JetBrains Mono', 'Fira Code', monospace; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+  nav { position: fixed; top: 0; width: 100%; background: rgba(8,8,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 100; }
+  .nav-inner { max-width: 880px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { font-family: var(--mono); font-size: 14px; color: var(--accent); text-decoration: none; }
+  .nav-back { font-size: 13px; color: var(--muted); text-decoration: none; }
+  .hero { padding: 160px 0 48px; }
+  .hero .tag { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--green); margin-bottom: 16px; }
+  .hero h1 { font-size: 40px; font-weight: 600; letter-spacing: -1px; color: var(--accent); margin-bottom: 16px; }
+  .hero .sub { font-size: 18px; color: var(--muted); }
+  section { padding: 56px 0; }
+  .section-label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 24px; }
+  h2 { font-size: 22px; font-weight: 600; color: var(--accent); margin-bottom: 16px; }
+  p { font-size: 15px; color: var(--text); line-height: 1.7; }
+  ul { list-style: none; }
+  ul li { margin-bottom: 8px; padding-left: 16px; border-left: 2px solid var(--border); font-size: 15px; color: var(--text); }
+  .modules { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .module { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px; }
+  .module .num { font-family: var(--mono); font-size: 11px; color: var(--green); margin-bottom: 4px; }
+  .module h4 { font-size: 13px; font-weight: 600; color: var(--accent); }
+  .cta-section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 40px; text-align: center; margin: 56px 0 80px; }
+  .cta-section h2 { margin-bottom: 8px; }
+  .cta-section p { color: var(--muted); margin-bottom: 24px; }
+  .btn { display: inline-block; background: var(--accent); color: var(--bg); padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 14px; }
+  .btn:hover { opacity: 0.85; }
+  .price { font-family: var(--mono); font-size: 28px; color: var(--accent); margin-top: 20px; }
+  footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  @media (max-width: 600px) { .modules { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<nav><div class="nav-inner"><a href="/" class="nav-logo">firsthand</a><a href="/" class="nav-back">← voltar</a></div></nav>
+<main class="container">
+
+<section class="hero">
+  <div class="tag">Para líderes</div>
+  <h1>cohort</h1>
+  <p class="sub">AI-Native Training. 2 dias live. O framework completo em formato de turma.</p>
+</section>
+
+<section><div class="section-label">Formato</div>
+  <ul>
+    <li><strong>2 dias ao vivo</strong> (sábado e domingo, 9h–18h). Online.</li>
+    <li><strong>Diagnóstico individual</strong> de maturidade AI antes do curso.</li>
+    <li><strong>3 meses de comunidade</strong> no Discord + 2 office hours em grupo.</li>
+    <li><strong>Turma de 20–40 líderes</strong> de empresas diferentes.</li>
+    <li><strong>Próxima turma:</strong> Agosto 2026.</li>
+  </ul>
+</section>
+
+<section><div class="section-label">O que você vai aprender</div>
+  <div class="modules">
+    <div class="module"><div class="num">Dia 1</div><h4>Onde AI cria alavancagem real</h4></div>
+    <div class="module"><div class="num">Dia 1</div><h4>Cultura que realmente adota AI</h4></div>
+    <div class="module"><div class="num">Dia 1</div><h4>ROI que convence o CFO</h4></div>
+    <div class="module"><div class="num">Dia 1</div><h4>Fireside: A verdade sobre transformação</h4></div>
+    <div class="module"><div class="num">Dia 2</div><h4>Codebase agent-ready</h4></div>
+    <div class="module"><div class="num">Dia 2</div><h4>As 4 mentiras sobre AI em EPD</h4></div>
+    <div class="module"><div class="num">Dia 2</div><h4>Operating model AI-native</h4></div>
+    <div class="module"><div class="num">Dia 2</div><h4>Governance que não paralisa</h4></div>
+  </div>
+</section>
+
+<div class="cta-section">
+  <h2>Próxima turma — Agosto 2026</h2>
+  <p>Vagas limitadas. Early bird até 15 de Julho.</p>
+  <div class="price">R$ 2.900 <span style="font-size:14px;color:var(--muted);">early bird</span></div>
+  <p style="margin-top:8px;font-size:13px;">R$ 3.900 regular</p>
+  <a href="mailto:fernanda@firsthand.dev" class="btn" style="margin-top:16px;">Entrar na lista →</a>
+</div>
+
+</main>
+<footer>firsthand</footer>
+</body>
+</html>

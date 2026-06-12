@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Fluency Check — The Cognitive Lab</title>
+<style>
+  :root {
+    --bg: #0a0a0b; --surface: #121215; --border: #1e1e24;
+    --text: #d4d4d8; --muted: #71717a; --accent: #f5f5f5;
+    --green: #22c55e; --amber: #f59e0b; --red: #ef4444; --violet: #a78bfa;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+
+  nav { position: fixed; top: 0; width: 100%; background: rgba(10,10,11,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 100; }
+  .nav-inner { max-width: 880px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { font-family: var(--mono); font-size: 14px; color: var(--accent); text-decoration: none; }
+  .nav-logo span { color: var(--muted); }
+
+  .hero { padding: 140px 0 40px; }
+  .hero .tag { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--amber); margin-bottom: 12px; }
+  .hero h1 { font-size: 32px; font-weight: 600; letter-spacing: -0.8px; color: var(--accent); margin-bottom: 12px; }
+  .hero p { font-size: 15px; color: var(--muted); max-width: 500px; }
+
+  .progress-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; height: 4px; margin-bottom: 40px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--amber); transition: width 0.3s ease; border-radius: 6px; }
+
+  .step { display: none; }
+  .step.active { display: block; }
+
+  .q { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px 28px; margin-bottom: 12px; }
+  .q h3 { font-size: 15px; font-weight: 600; color: var(--accent); margin-bottom: 6px; }
+  .q p { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+  .opts { display: flex; flex-direction: column; gap: 6px; }
+  .opt { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; cursor: pointer; font-size: 13px; color: var(--text); font-family: var(--font); width: 100%; text-align: left; transition: border-color 0.2s; }
+  .opt:hover { border-color: var(--muted); }
+  .opt.sel { border-color: var(--amber); background: rgba(245,158,11,0.06); }
+
+  .nav-btns { display: flex; justify-content: space-between; margin-top: 28px; }
+  .btn { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 10px 20px; cursor: pointer; font-family: var(--font); font-size: 14px; color: var(--text); }
+  .btn:hover { border-color: var(--muted); }
+  .btn-p { background: var(--amber); color: #000; border: none; }
+  .btn-p:hover { opacity: 0.85; }
+
+  .results { display: none; padding-bottom: 80px; }
+  .results.active { display: block; }
+  .rcard { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 28px; margin-bottom: 16px; }
+  .lvl { display: inline-block; font-family: var(--mono); font-size: 20px; font-weight: 600; padding: 6px 16px; border-radius: 6px; margin-bottom: 12px; }
+  .ln1 { background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid rgba(239,68,68,0.25); }
+  .ln2 { background: rgba(245,158,11,0.12); color: #f59e0b; border: 1px solid rgba(245,158,11,0.25); }
+  .ln3 { background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.25); }
+  .ln4 { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.25); }
+
+  .dim { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+  .dim-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); min-width: 110px; }
+  .dim-bar { flex: 1; height: 4px; background: var(--border); border-radius: 2px; position: relative; }
+  .dim-dot { position: absolute; top: -3px; width: 10px; height: 10px; border-radius: 50%; background: var(--amber); }
+  .dim-rec { font-size: 12px; color: var(--muted); margin: 4px 0 12px 120px; padding: 6px 10px; background: var(--bg); border-radius: 4px; border-left: 2px solid var(--amber); }
+
+  .score-big { font-family: var(--mono); font-size: 56px; font-weight: 600; color: var(--accent); }
+  .score-label { font-size: 13px; color: var(--muted); }
+
+  footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 26px; }
+    .dim { flex-direction: column; align-items: flex-start; }
+    .dim-rec { margin-left: 0; }
+    .score-big { font-size: 42px; }
+  }
+</style>
+</head>
+<body>
+
+<nav><div class="nav-inner"><a href="/" class="nav-logo">the cognitive lab<span>™</span></a></div></nav>
+
+<main class="container">
+
+<section class="hero">
+  <div class="tag">Para Funcionários · B2B</div>
+  <h1>Como você usa AI no seu trabalho?</h1>
+  <p>3 minutos. Uma autoavaliação de fluência em AI para profissionais — distribua para seu time e entenda o nível coletivo.</p>
+</section>
+
+<div class="progress-bar"><div class="progress-fill" id="progress" style="width:0%"></div></div>
+
+<!-- STEP 1 -->
+<div class="step active" id="s1">
+  <div class="q">
+    <h3>Com que frequência você usa ferramentas de AI no seu trabalho?</h3>
+    <div class="opts">
+      <button class="opt" data-v="1">Raramente ou nunca. Faço meu trabalho sem AI.</button>
+      <button class="opt" data-v="2">Algumas vezes por semana. Uso para tarefas pontuais (escrever email, pesquisar).</button>
+      <button class="opt" data-v="3">Diariamente. AI está integrada em várias tarefas do meu dia.</button>
+      <button class="opt" data-v="4">AI é essencial para meu trabalho. Sem AI eu seria significativamente menos produtivo.</button>
+    </div>
+  </div>
+  <div class="q">
+    <h3>Quais ferramentas você usa?</h3>
+    <p>Marque todas que se aplicam.</p>
+    <div class="opts" id="tools-q">
+      <button class="opt" data-v="chatgpt">ChatGPT, Claude, Gemini (chat)</button>
+      <button class="opt" data-v="copilot">GitHub Copilot, Cursor, Codex (coding)</button>
+      <button class="opt" data-v="agents">Agentes autônomos (Claude Code, agentes de review/test)</button>
+      <button class="opt" data-v="specialized">Ferramentas especializadas (AI de design, AI de dados, AI de marketing)</button>
+      <button class="opt" data-v="custom">Ferramentas internas / customizadas da empresa</button>
+    </div>
+  </div>
+  <div class="nav-btns"><div></div><button class="btn btn-p" onclick="nx()">Próximo →</button></div>
+</div>
+
+<!-- STEP 2 -->
+<div class="step" id="s2">
+  <div class="q">
+    <h3>O que você faz com AI que antes fazia manualmente?</h3>
+    <div class="opts">
+      <button class="opt" data-v="1">Quase nada. AI não mudou significativamente como eu trabalho.</button>
+      <button class="opt" data-v="2">Tarefas administrativas: resumos, busca de informação, rascunhos.</button>
+      <button class="opt" data-v="3">Tarefas do meu core: análise, criação de conteúdo, revisão de código, prototipação, decisões.</button>
+      <button class="opt" data-v="4">Meu fluxo de trabalho inteiro foi redesenhado com AI. Faço coisas que antes eram impossíveis ou levariam dias.</button>
+    </div>
+  </div>
+  <div class="q">
+    <h3>Quando AI produz algo, você revisa antes de usar?</h3>
+    <div class="opts">
+      <button class="opt" data-v="1">Sempre reviso tudo. Não confio no output sem verificação completa.</button>
+      <button class="opt" data-v="2">Reviso o resultado final, mas não o passo a passo.</button>
+      <button class="opt" data-v="3">Confio em tarefas de baixo risco, reviso as de alto risco.</button>
+      <button class="opt" data-v="4">Tenho calibração precisa: sei quando confiar e quando revisar. Uso AI como par, não como ferramenta.</button>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="btn" onclick="pv()">← Voltar</button><button class="btn btn-p" onclick="nx()">Próximo →</button></div>
+</div>
+
+<!-- STEP 3 -->
+<div class="step" id="s3">
+  <div class="q">
+    <h3>Você compartilha o que aprendeu sobre AI com colegas?</h3>
+    <div class="opts">
+      <button class="opt" data-v="1">Não. Cada um usa do seu jeito.</button>
+      <button class="opt" data-v="2">Eventualmente. Se alguém pergunta, eu mostro.</button>
+      <button class="opt" data-v="3">Ativamente. Compartilho prompts, ferramentas e descobertas com o time.</button>
+      <button class="opt" data-v="4">Sou referência no time. Colegas me procuram para aprender e eu crio materiais/skills para os outros usarem.</button>
+    </div>
+  </div>
+  <div class="q">
+    <h3>O que te limita a usar mais AI no trabalho?</h3>
+    <div class="opts">
+      <button class="opt" data-v="blocked-access">Não tenho acesso às ferramentas que quero (bloqueio de TI, budget)</button>
+      <button class="opt" data-v="blocked-knowledge">Não sei o suficiente para usar melhor</button>
+      <button class="opt" data-v="blocked-time">Não tenho tempo para aprender/experimentar</button>
+      <button class="opt" data-v="blocked-permission">Não sei se tenho permissão para usar AI em certas tarefas (dados sensíveis, compliance)</button>
+      <button class="opt" data-v="blocked-none">Nada significativo me limita</button>
+    </div>
+  </div>
+  <div class="nav-btns"><button class="btn" onclick="pv()">← Voltar</button><button class="btn btn-p" onclick="show()">Ver meu resultado →</button></div>
+</div>
+
+<!-- RESULTS -->
+<div class="results" id="results">
+  <div class="rcard" style="text-align:center;">
+    <div id="badge"></div>
+    <h2 style="font-size:20px;color:var(--accent);margin-bottom:4px;" id="title"></h2>
+    <p style="color:var(--muted);max-width:440px;margin:0 auto;font-size:14px;" id="desc"></p>
+  </div>
+
+  <div class="rcard">
+    <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:20px;">Suas Dimensões</h3>
+    <div id="dims"></div>
+  </div>
+
+  <div class="rcard" id="blockers-card" style="display:none;">
+    <h3 style="font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:12px;">Seus Bloqueadores</h3>
+    <div id="blockers"></div>
+  </div>
+
+  <div style="text-align:center;padding:40px 0 60px;">
+    <p style="color:var(--muted);font-size:14px;">Este é um diagnóstico individual. Para resultados agregados do seu time ou empresa, entre em contato.</p>
+  </div>
+</div>
+
+</main>
+
+<footer>the cognitive lab™</footer>
+
+<script>
+let step = 0, answers = {};
+document.querySelectorAll('.opt').forEach(b => b.addEventListener('click', function(){
+  const q = this.closest('.q');
+  if (q.id === 'tools-q') { this.classList.toggle('sel'); return; }
+  q.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+  this.classList.add('sel');
+}));
+
+function getVals(el){
+  const qs = el.querySelectorAll('.q');
+  const vals = [];
+  qs.forEach(q => {
+    const sel = q.querySelectorAll('.opt.sel');
+    if (q.id === 'tools-q') vals.push([...sel].map(o=>o.dataset.v));
+    else if (sel.length === 1) vals.push(parseInt(sel[0].dataset.v));
+  });
+  return vals;
+}
+
+function nx(){
+  const s = document.getElementById('s'+(step+1));
+  const v = getVals(s);
+  // toolkit q can have 0 selections, but others need 1
+  const required = s.querySelectorAll('.q:not(#tools-q)').length;
+  const got = v.filter(x => typeof x === 'number').length;
+  if (got < required) return alert('Responda todas as perguntas.');
+  answers['s'+(step+1)] = v;
+  s.classList.remove('active'); step++;
+  document.getElementById('s'+(step+1)).classList.add('active');
+  document.getElementById('progress').style.width = ((step/3)*100)+'%';
+  window.scrollTo({top:180,behavior:'smooth'});
+}
+function pv(){
+  document.getElementById('s'+(step+1)).classList.remove('active'); step--;
+  document.getElementById('s'+(step+1)).classList.add('active');
+  document.getElementById('progress').style.width = ((step/3)*100)+'%';
+  window.scrollTo({top:180,behavior:'smooth'});
+}
+function show(){
+  const s = document.getElementById('s'+(step+1));
+  const v = getVals(s);
+  const required = s.querySelectorAll('.q').length;
+  if (v.filter(x => x !== undefined).length < required) return alert('Responda todas as perguntas.');
+  answers['s'+(step+1)] = v;
+
+  document.querySelectorAll('.step').forEach(e=>e.classList.remove('active'));
+  document.getElementById('progress').style.width = '100%';
+  document.getElementById('results').classList.add('active');
+
+  // Calculate score: q1=q2=q3=q5 are 1-4 scale; q4 (sharing) is 1-4; q6 is blocker (not scored)
+  const scores = [];
+  answers['s1'][0] && scores.push(answers['s1'][0]); // frequency
+  answers['s2'][0] && scores.push(answers['s2'][0]); // what AI does
+  answers['s2'][1] && scores.push(answers['s2'][1]); // review/trust
+  answers['s3'][0] && scores.push(answers['s3'][0]); // sharing
+
+  const tools = answers['s1'][1] || [];
+  const blocker = answers['s3'][1];
+
+  const overall = scores.reduce((a,b)=>a+b,0)/scores.length;
+  const lvl = overall < 1.8 ? 1 : overall < 2.6 ? 2 : overall < 3.4 ? 3 : 4;
+
+  const levels = {
+    1: {cls:'ln1',t:'N1 — AI Novice',d:'Você está no começo da jornada. AI ainda não faz parte significativa do seu trabalho. Isso não é um problema — é um ponto de partida. O importante é começar com tarefas simples e construir confiança.'},
+    2: {cls:'ln2',t:'N2 — AI User',d:'Você usa AI regularmente para tarefas de suporte — pesquisa, rascunhos, resumos. AI te ajuda a ser mais rápido. O próximo passo é trazer AI para tarefas mais centrais do seu trabalho.'},
+    3: {cls:'ln3',t:'N3 — AI Practitioner',d:'AI está integrada no seu core work. Você usa com confiança, sabe quando revisar e quando delegar, e compartilha conhecimento com colegas. Você é o perfil que toda empresa quer multiplicar.'},
+    4: {cls:'ln4',t:'N4 — AI Native',d:'AI é seu sistema operacional de trabalho. Você opera com AI como parceira, não como ferramenta. Seu fluxo de trabalho foi redesenhado — e você ajuda outros a chegarem lá.'}
+  };
+  const L = levels[lvl];
+  document.getElementById('badge').innerHTML = `<span class="lvl ${L.cls}">${L.t.split(' — ')[0]}</span>`;
+  document.getElementById('title').textContent = L.t;
+  document.getElementById('desc').textContent = L.d;
+
+  const dims = {
+    'Frequência': {score: scores[0], recs: {1:'Reserve 15min/dia para usar AI em uma tarefa real.', 2:'Identifique 2 tarefas do seu core que poderiam ser AI-assisted.', 3:'Experimente agentes autônomos para tarefas repetíveis.', 4:'Você está no máximo. Compartilhe seu método.'}},
+    'Profundidade': {score: scores[1], recs: {1:'Comece com tarefas administrativas: resumos, busca.', 2:'Traga AI para uma tarefa do seu core esta semana.', 3:'Redesenhe um fluxo de trabalho inteiro com AI no centro.', 4:'Você já faz isso. Documente e ensine.'}},
+    'Confiança': {score: scores[2], recs: {1:'Confie em tarefas de baixo risco sem revisar. Construa calibração.', 2:'Identifique quais tipos de output você já pode confiar.', 3:'Você tem boa calibração. Compartilhe heurísticas com o time.', 4:'Sua calibração é precisa. Ajude novos usuários a desenvolver a deles.'}},
+    'Compartilhamento': {score: scores[3], recs: {1:'Mostre para um colega como você usa AI esta semana.', 2:'Crie um canal no Slack para compartilhar prompts e descobertas.', 3:'Lidere uma sessão de AI demo para o time.', 4:'Crie skills ou agentes que outros possam usar.'}}
+  };
+
+  let dhtml = '';
+  Object.entries(dims).forEach(([name,d]) => {
+    const dl = d.score < 1.8 ? 1 : d.score < 2.6 ? 2 : d.score < 3.4 ? 3 : 4;
+    dhtml += `<div class="dim"><span class="dim-label">${name}</span><div class="dim-bar"><div class="dim-dot" style="left:${(d.score/4)*100}%"></div></div><span style="font-size:11px;color:var(--muted);min-width:20px;">N${dl}</span></div>`;
+    dhtml += `<div class="dim-rec">${d.recs[dl]}</div>`;
+  });
+  document.getElementById('dims').innerHTML = dhtml;
+
+  // Tools
+  if (tools.length > 0) {
+    dhtml += `<div style="margin-top:16px;font-size:12px;color:var(--muted);">Ferramentas: ${tools.map(t=>t==='chatgpt'?'Chat':'coding tools').join(', ')}</div>`;
+  }
+
+  // Blocker
+  if (blocker && blocker !== 'blocked-none') {
+    const blockerLabels = {
+      'blocked-access': 'Acesso a ferramentas — sua empresa restringe uso de AI tools.',
+      'blocked-knowledge': 'Conhecimento — você quer aprender mais para usar melhor.',
+      'blocked-time': 'Tempo — você não consegue priorizar aprendizado de AI.',
+      'blocked-permission': 'Permissão — incerteza sobre compliance e dados sensíveis.'
+    };
+    document.getElementById('blockers-card').style.display = 'block';
+    document.getElementById('blockers').innerHTML = `<p style="font-size:14px;color:var(--text);">${blockerLabels[blocker] || blocker}</p><p style="font-size:13px;color:var(--muted);margin-top:8px;">Este é um dado importante para sua liderança. Compartilhe com seu gestor.</p>`;
+  }
+
+  window.scrollTo({top:180,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

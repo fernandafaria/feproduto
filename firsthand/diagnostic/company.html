@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Native Maturity Assessment — The Cognitive Lab</title>
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --surface: #121215;
+    --border: #1e1e24;
+    --text: #d4d4d8;
+    --muted: #71717a;
+    --accent: #f5f5f5;
+    --green: #22c55e;
+    --amber: #f59e0b;
+    --red: #ef4444;
+    --violet: #a78bfa;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+
+  nav {
+    position: fixed; top: 0; width: 100%;
+    background: rgba(10,10,11,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border); z-index: 100;
+  }
+  .nav-inner { max-width: 880px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { font-family: var(--mono); font-size: 14px; color: var(--accent); text-decoration: none; }
+  .nav-logo span { color: var(--muted); }
+
+  .hero { padding: 140px 0 40px; }
+  .hero .tag { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--violet); margin-bottom: 12px; }
+  .hero h1 { font-size: 36px; font-weight: 600; letter-spacing: -1px; color: var(--accent); margin-bottom: 12px; }
+  .hero p { font-size: 16px; color: var(--muted); max-width: 520px; }
+
+  .progress-bar {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+    height: 4px; margin-bottom: 40px; overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: var(--accent); transition: width 0.3s ease;
+    border-radius: 6px;
+  }
+
+  .step { display: none; }
+  .step.active { display: block; }
+
+  .question {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 28px; margin-bottom: 16px;
+  }
+  .question h3 { font-size: 16px; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+  .question p { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option {
+    background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+    padding: 14px 16px; cursor: pointer; transition: border-color 0.2s, background 0.2s;
+    font-size: 14px; color: var(--text); text-align: left; font-family: var(--font);
+    width: 100%;
+  }
+  .option:hover { border-color: var(--muted); }
+  .option.selected { border-color: var(--accent); background: rgba(255,255,255,0.04); }
+
+  .nav-buttons { display: flex; justify-content: space-between; margin-top: 32px; }
+  .btn {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 6px;
+    padding: 10px 20px; cursor: pointer; font-family: var(--font); font-size: 14px;
+    color: var(--text); transition: border-color 0.2s;
+  }
+  .btn:hover { border-color: var(--muted); }
+  .btn-primary { background: var(--accent); color: var(--bg); border: none; }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+  .results { display: none; }
+  .results.active { display: block; }
+
+  .result-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 32px; margin-bottom: 20px;
+  }
+  .level-badge {
+    display: inline-block; font-family: var(--mono); font-size: 24px; font-weight: 600;
+    padding: 8px 20px; border-radius: 6px; margin-bottom: 16px;
+  }
+  .level-N1 { background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid rgba(239,68,68,0.25); }
+  .level-N2 { background: rgba(245,158,11,0.12); color: #f59e0b; border: 1px solid rgba(245,158,11,0.25); }
+  .level-N3 { background: rgba(34,197,94,0.12); color: #22c55e; border: 1px solid rgba(34,197,94,0.25); }
+  .level-N4 { background: rgba(167,139,250,0.12); color: #a78bfa; border: 1px solid rgba(167,139,250,0.25); }
+
+  .area-result { margin-bottom: 24px; }
+  .area-result h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 12px; }
+  .gap-bar {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 8px;
+  }
+  .gap-level { font-family: var(--mono); font-size: 13px; min-width: 24px; }
+  .gap-line {
+    flex: 1; height: 2px; background: var(--border); border-radius: 2px;
+    position: relative;
+  }
+  .gap-dot {
+    position: absolute; top: -4px; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent);
+  }
+  .recommendation {
+    font-size: 13px; color: var(--muted); margin-top: 6px; padding: 8px 12px;
+    background: var(--bg); border-radius: 4px; border-left: 2px solid var(--accent);
+  }
+
+  .cta-section {
+    text-align: center; padding: 40px 0 80px;
+  }
+  .cta-section h2 { font-size: 24px; font-weight: 600; color: var(--accent); margin-bottom: 12px; }
+  .cta-section p { color: var(--muted); margin-bottom: 24px; }
+
+  .email-capture {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 32px; max-width: 460px; margin: 0 auto;
+  }
+  .email-capture label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.6px; }
+  .email-capture input {
+    width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+    padding: 10px 12px; font-family: var(--font); font-size: 14px; color: var(--text);
+    margin-bottom: 16px;
+  }
+  .email-capture input:focus { outline: none; border-color: var(--muted); }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 32px 0; text-align: center;
+    font-family: var(--mono); font-size: 12px; color: var(--muted);
+  }
+  footer a { color: var(--muted); text-decoration: none; margin: 0 12px; }
+  footer a:hover { color: var(--text); }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 28px; }
+    .question { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">the cognitive lab<span>™</span></a>
+  </div>
+</nav>
+
+<main class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+  <div class="tag">Para Empresas · B2B</div>
+    <h1>Qual o nível AI-Native da sua empresa?</h1>
+    <p>7 minutos. Avalie 5 áreas da sua organização e descubra onde estão os gaps que impedem sua empresa de operar como AI-native.</p>
+  </section>
+
+  <!-- PROGRESS -->
+  <div class="progress-bar"><div class="progress-fill" id="progress" style="width: 0%"></div></div>
+
+  <!-- STEP 1: CULTURE -->
+  <div class="step active" id="step-1">
+    <div class="question">
+      <h3>Como sua liderança usa AI visivelmente?</h3>
+      <p>Avalie o comportamento da liderança executiva — não o que dizem, mas o que os times VEEM.</p>
+      <div class="options">
+        <button class="option" data-value="1">Alguns líderes usam ChatGPT/Copilot, mas não é visível para os times</button>
+        <button class="option" data-value="2">Liderança fala sobre AI em reuniões e incentiva uso, mas não modela no dia a dia</button>
+        <button class="option" data-value="3">Liderança usa AI visivelmente em reuniões, revisões e decisões — os times veem</button>
+        <button class="option" data-value="4">AI está integrada nos rituais de liderança: status updates, reviews, decisões de portfólio são AI-assisted</button>
+      </div>
+    </div>
+    <div class="question">
+      <h3>Como sua empresa recompensa adoção de AI?</h3>
+      <p>O que acontece quando alguém usa AI para entregar mais resultado?</p>
+      <div class="options">
+        <button class="option" data-value="1">Nada específico — é esperado que cada um se vire</button>
+        <button class="option" data-value="2">Reconhecimento informal em reuniões, mas sem impacto em carreira ou remuneração</button>
+        <button class="option" data-value="3">AI proficiency está nas career ladders — afeta promoção e avaliação</button>
+        <button class="option" data-value="4">AI-driven performance é o principal critério de crescimento — carreiras aceleradas por fluência em AI</button>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <div></div>
+      <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: OPERATING MODEL -->
+  <div class="step" id="step-2">
+    <div class="question">
+      <h3>Como o trabalho flui entre decisão e deploy?</h3>
+      <p>Pense no pipeline: da ideia até estar em produção.</p>
+      <div class="options">
+        <button class="option" data-value="1">Sprints de 2 semanas, planning poker, reviews — o ciclo é previsível e lento</button>
+        <button class="option" data-value="2">Algumas iniciativas escapam do processo padrão — deploys mais rápidos, mas sem sistema</button>
+        <button class="option" data-value="3">AI agents participam do pipeline: code review, testes, documentação. Tempo de ciclo caiu visivelmente</button>
+        <button class="option" data-value="4">Pipeline assíncrono: agentes trabalham 24/7, humanos revisam e aprovam. Deploy múltiplas vezes ao dia</button>
+      </div>
+    </div>
+    <div class="question">
+      <h3>Quais rituais sua empresa já abandonou?</h3>
+      <p>Rituais que existiam porque implementação era lenta e cara.</p>
+      <div class="options">
+        <button class="option" data-value="1">Nenhum — mantemos todos os rituais tradicionais</button>
+        <button class="option" data-value="2">Encurtamos alguns (daily de 15min em vez de 30min), mas a estrutura é a mesma</button>
+        <button class="option" data-value="3">Eliminamos planning poker, estimation sessions. Foco em outcome, não em output</button>
+        <button class="option" data-value="4">Rituais foram completamente redesenhados para AI speed — daily de orquestração, weekly de direção, monthly de portfólio</button>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn" onclick="prevStep()">← Voltar</button>
+      <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: ROLES -->
+  <div class="step" id="step-3">
+    <div class="question">
+      <h3>Como os papéis de Engineering, Product e Design estão evoluindo?</h3>
+      <p>Não o que está no job description oficial — o que acontece na prática.</p>
+      <div class="options">
+        <button class="option" data-value="1">Papéis estáveis como sempre foram — engenheiro coda, PM escreve spec, designer entrega mockup</button>
+        <button class="option" data-value="2">Algumas pessoas estão expandindo suas funções informalmente, mas o sistema de carreira não mudou</button>
+        <button class="option" data-value="3">Job descriptions foram atualizados com competencies de AI. PMs prototipam, designers codam</button>
+        <button class="option" data-value="4">Papéis foram redesenhados: Engineer = Reviewer+Orchestrator, PM = Prototype Builder, Design = Judgment+Craft. Career ladders refletem isso</button>
+      </div>
+    </div>
+    <div class="question">
+      <h3>Você tem agentes atuando como teammates?</h3>
+      <p>Agentes que têm responsabilidades, não só ferramentas que alguém usa.</p>
+      <div class="options">
+        <button class="option" data-value="1">Não — AI é ferramenta individual (Copilot, ChatGPT)</button>
+        <button class="option" data-value="2">Alguns times têm agentes para tarefas específicas (code review, documentação), mas não são integrados ao time</button>
+        <button class="option" data-value="3">Agentes participam de rituais do time — têm tasks atribuídas, reportam status, recebem feedback</button>
+        <button class="option" data-value="4">Agentes são tratados como membros do time: têm scope, autonomia, e são promovidos (mais responsabilidade conforme entregam)</button>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn" onclick="prevStep()">← Voltar</button>
+      <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: METRICS -->
+  <div class="step" id="step-4">
+    <div class="question">
+      <h3>O que você mede sobre adoção de AI?</h3>
+      <p>Métricas que você reporta ou discute em reviews de liderança.</p>
+      <div class="options">
+        <button class="option" data-value="1">Nada específico — talvez número de licenças do Copilot ativas</button>
+        <button class="option" data-value="2">Métricas de atividade: % de devs usando AI tools, número de tokens consumidos</button>
+        <button class="option" data-value="3">Métricas de throughput: PR frequency, cycle time, agent contribution rate — com dashboard visível</button>
+        <button class="option" data-value="4">Métricas de outcome: revenue per engineer, time-to-market, customer impact. Throughput + outcome conectados em narrativa executiva</button>
+      </div>
+    </div>
+    <div class="question">
+      <h3>Como as decisões sobre investimento em AI são tomadas?</h3>
+      <p>Quem decide quanto investir, em quê, e com qual critério.</p>
+      <div class="options">
+        <button class="option" data-value="1">Cada time decide suas ferramentas — não há visão de portfólio</button>
+        <button class="option" data-value="2">Existe orçamento central para AI tools, mas a alocação é por demanda, não por estratégia</button>
+        <button class="option" data-value="3">Portfólio de iniciativas de AI com 3 horizontes (quick wins, expansão, bets). Revisão trimestral</button>
+        <button class="option" data-value="4">AI investment é core da estratégia de negócio. CFO e board revisam ROI de AI trimestralmente. Decisões de portfólio baseadas em dados de outcome</button>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn" onclick="prevStep()">← Voltar</button>
+      <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: SYSTEM READINESS -->
+  <div class="step" id="step-5">
+    <div class="question">
+      <h3>Seu codebase passa no New-Hire Test?</h3>
+      <p>Um engenheiro novo consegue commitar no primeiro dia sem perguntar nada?</p>
+      <div class="options">
+        <button class="option" data-value="1">Não — onboarding leva semanas, documentação é escassa ou desatualizada</button>
+        <button class="option" data-value="2">Documentação existe mas não é agent-ready — agentes não conseguem navegar sozinhos</button>
+        <button class="option" data-value="3">AGENTS.md, skills, hooks e telemetry implementados. Agentes conseguem commitar em horas</button>
+        <button class="option" data-value="4">Codebase 100% agent-ready: sandboxes, background agents, CI/CD otimizado para agent speed. 30%+ dos PRs são de agentes</button>
+      </div>
+    </div>
+    <div class="question">
+      <h3>Como é seu governance de AI?</h3>
+      <p>Segurança, risco, compliance para agentes em produção.</p>
+      <div class="options">
+        <button class="option" data-value="1">Sem governance específico — AI é tratada como qualquer outra ferramenta</button>
+        <button class="option" data-value="2">Guidelines informais, revisão humana obrigatória para tudo que agentes produzem</button>
+        <button class="option" data-value="3">Framework de risco em 3 camadas, níveis de autonomia definidos, incident response para agentes</button>
+        <button class="option" data-value="4">Governance proporcional ao risco com autonomia calibrada. Agentes em camada 1 e 2 operam com supervisão mínima. Compliance automatizado (hooks + telemetry)</button>
+      </div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn" onclick="prevStep()">← Voltar</button>
+      <button class="btn btn-primary" onclick="showResults()">Ver meu diagnóstico →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="results" id="results">
+    <div class="result-card" style="text-align:center;">
+      <div id="overall-badge"></div>
+      <h2 style="font-size:22px;color:var(--accent);margin-bottom:8px;" id="overall-title"></h2>
+      <p style="color:var(--muted);max-width:480px;margin:0 auto;" id="overall-desc"></p>
+    </div>
+
+    <div class="result-card">
+      <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:24px;">Diagnóstico por Área</h3>
+      <div id="area-results"></div>
+    </div>
+
+    <div class="result-card">
+      <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:16px;">Recomendação</h3>
+      <p style="font-size:15px;color:var(--text);line-height:1.7;" id="recommendation-text"></p>
+    </div>
+
+    <!-- EMAIL CAPTURE -->
+    <div class="cta-section">
+      <h2>Receba o diagnóstico completo</h2>
+      <p>Envie seu email para receber o relatório detalhado com recomendações por área e os próximos passos para sua empresa.</p>
+      <div class="email-capture">
+        <label>Email</label>
+        <input type="email" placeholder="seu@email.com" id="email-input">
+        <button class="btn btn-primary" style="width:100%;" onclick="submitEmail()">Receber diagnóstico completo</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <a href="/">the cognitive lab</a>
+</footer>
+
+<script>
+let currentStep = 0;
+const totalSteps = 5;
+let answers = {};
+
+function selectOption(el) {
+  const question = el.closest('.question');
+  question.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+document.querySelectorAll('.option').forEach(btn => {
+  btn.addEventListener('click', () => selectOption(btn));
+});
+
+function getAnswersForStep(stepEl) {
+  const vals = [];
+  stepEl.querySelectorAll('.option.selected').forEach(o => vals.push(parseInt(o.dataset.value)));
+  return vals;
+}
+
+function nextStep() {
+  const step = document.getElementById(`step-${currentStep + 1}`);
+  const selected = getAnswersForStep(step);
+  if (selected.length < 2) { alert('Responda as duas perguntas antes de continuar.'); return; }
+
+  answers[`step-${currentStep + 1}`] = selected;
+  step.classList.remove('active');
+  currentStep++;
+  document.getElementById(`step-${currentStep + 1}`).classList.add('active');
+  document.getElementById('progress').style.width = ((currentStep / totalSteps) * 100) + '%';
+  window.scrollTo({top: 200, behavior: 'smooth'});
+}
+
+function prevStep() {
+  document.getElementById(`step-${currentStep + 1}`).classList.remove('active');
+  currentStep--;
+  document.getElementById(`step-${currentStep + 1}`).classList.add('active');
+  document.getElementById('progress').style.width = ((currentStep / totalSteps) * 100) + '%';
+  window.scrollTo({top: 200, behavior: 'smooth'});
+}
+
+function showResults() {
+  const step = document.getElementById(`step-${currentStep + 1}`);
+  const selected = getAnswersForStep(step);
+  if (selected.length < 2) { alert('Responda as duas perguntas antes de ver o diagnóstico.'); return; }
+
+  answers[`step-${currentStep + 1}`] = selected;
+
+  // Calculate scores per area and overall
+  const areas = ['Cultura', 'Operating Model', 'Roles', 'Métricas', 'System Readiness'];
+  const areaScores = {};
+  const allScores = [];
+
+  Object.keys(answers).forEach((key, i) => {
+    const [q1, q2] = answers[key];
+    const avg = (q1 + q2) / 2;
+    areaScores[areas[i]] = avg;
+    allScores.push(q1, q2);
+  });
+
+  const overall = allScores.reduce((a,b) => a + b, 0) / allScores.length;
+  const level = overall < 1.8 ? 1 : overall < 2.6 ? 2 : overall < 3.4 ? 3 : 4;
+
+  // Hide steps, show results
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  document.getElementById('progress').style.width = '100%';
+  document.getElementById('results').classList.add('active');
+
+  // Overall badge
+  const levels = {
+    1: { cls: 'level-N1', title: 'N1 — AI as Individual Productivity', desc: 'AI é usada por indivíduos para acelerar tarefas pessoais. Não existe sistema — existem heróis isolados. O ganho não escala porque depende de quem está usando.' },
+    2: { cls: 'level-N2', title: 'N2 — AI as Team Productivity', desc: 'Times começaram a usar agentes compartilhados e skills. A adoção está se espalhando, mas ainda depende de iniciativas bottom-up. O operating model não mudou estruturalmente.' },
+    3: { cls: 'level-N3', title: 'N3 — AI as Contextualized OS', desc: 'Uma camada agêntica conecta ferramentas e Contexto. O trabalho flui com AI integrada nos rituais. Mas as decisões ainda são humanas — AI não participa do julgamento.' },
+    4: { cls: 'level-N4', title: 'N4 — AI as Decision Intelligence', desc: 'AI propõe decisões baseadas em aprendizado humano. A qualidade de decisão converge ao nível do melhor julgamento da empresa. O operating model foi redesenhado para AI speed.' }
+  };
+
+  const lvl = levels[level];
+  document.getElementById('overall-badge').innerHTML = `<span class="level-badge ${lvl.cls}">${lvl.title.split(' — ')[0]}</span>`;
+  document.getElementById('overall-title').textContent = lvl.title;
+  document.getElementById('overall-desc').textContent = lvl.desc;
+
+  // Area results
+  let areaHTML = '';
+  Object.entries(areaScores).forEach(([area, score]) => {
+    const areaLevel = score < 1.8 ? 'N1' : score < 2.6 ? 'N2' : score < 3.4 ? 'N3' : 'N4';
+    const pct = (score / 4) * 100;
+    const recs = {
+      'Cultura': { N1: 'Comece com Model: use AI visivelmente como líder. Seu time precisa VER você usando.', N2: 'Formalize AI nas career ladders. Promova quem demonstra fluência.', N3: 'Implemente dedicated AI time e meça adoção por time.', N4: 'Você está no nível máximo observável. Compartilhe seu caso.' },
+      'Operating Model': { N1: 'Mapeie os processos que existem só porque implementação era lenta.', N2: 'Elimine 1 ritual que não faz mais sentido. Comece com planning poker.', N3: 'Redesenhe o pipeline: da ideia ao deploy com agentes no loop.', N4: 'Seu operating model está em AI speed. Monitore e refine.' },
+      'Roles': { N1: 'Atualize job descriptions com competencies de AI.', N2: 'Crie trilhas de carreira que valorizem AI proficiency.', N3: 'Contrate ou designe agentic teammates com responsabilidades claras.', N4: 'Papéis já evoluíram. Foque em retenção dos seus melhores AI-native builders.' },
+      'Métricas': { N1: 'Comece medindo % de devs usando AI tools diariamente.', N2: 'Monte um dashboard de throughput: PR frequency, cycle time, agent contribution.', N3: 'Conecte throughput a outcome: mostre correlação com revenue e time-to-market.', N4: 'Seu CFO já entende o ROI. Agora monitore leading indicators e recalibre trimestralmente.' },
+      'System Readiness': { N1: 'Crie AGENTS.md no repo. Documente o que agentes precisam saber.', N2: 'Implemente hooks e telemetry. Agentes precisam de feedback loops.', N3: 'Configure background agents e sandboxes. Mire 30% de PRs de agentes.', N4: 'Codebase 100% agent-ready. Compartilhe seu playbook.' }
+    };
+    areaHTML += `
+      <div class="area-result">
+        <h4>${area}</h4>
+        <div class="gap-bar">
+          <span class="gap-level">${areaLevel}</span>
+          <div class="gap-line"><div class="gap-dot" style="left:${pct}%"></div></div>
+          <span style="font-size:12px;color:var(--muted);">N4</span>
+        </div>
+        <div class="recommendation">${recs[area][areaLevel]}</div>
+      </div>`;
+  });
+  document.getElementById('area-results').innerHTML = areaHTML;
+
+  // Recommendation
+  const recText = {
+    1: 'Sua empresa está no N1. Isso é normal — 84% das empresas estão aqui. A boa notícia: o salto do N1 pro N2 é o mais rápido quando feito com método. Nosso AI-Native Training é desenhado exatamente para esse salto. 2 dias. Você sai com um plano.',
+    2: 'N2: adoção está acontecendo, mas ainda depende de heróis. O risco é estagnar aqui — confundir "temos agentes" com "somos AI-native". Nossa AI-Native Transformation foca em transformar iniciativas isoladas em sistema.',
+    3: 'N3: você já tem uma camada agêntica funcionando. O próximo salto é o mais difícil — de execução para decisão. AI Executive Coaching ou Transformation com foco em governance e decision intelligence.',
+    4: 'N4: você está na fronteira do que é observável. Empresas nesse nível são raras. Se quiser compartilhar seu caso ou explorar o caminho para N5, podemos conversar.'
+  };
+  document.getElementById('recommendation-text').textContent = recText[level];
+
+  window.scrollTo({top: 200, behavior: 'smooth'});
+}
+
+function submitEmail() {
+  const email = document.getElementById('email-input').value;
+  if (!email) { alert('Digite seu email para receber o diagnóstico.'); return; }
+  // TODO: connect to email service
+  document.querySelector('.email-capture').innerHTML = '<p style="color:var(--green);font-size:15px;">✓ Diagnóstico enviado. Verifique seu email.</p>';
+}
+</script>
+
+</body>
+</html>
