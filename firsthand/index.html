@@ -4,313 +4,247 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>firsthand · AI-native transformation, firsthand.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --canvas: #FAFAFA;
-    --surface: #FFFFFF;
-    --surface-hover: #F5F5F5;
-    --border: #E5E5E5;
-    --border-strong: #D4D4D4;
-    --text: #0A0A0A;
-    --text-muted: #3D3D3D;
-    --text-tertiary: #737373;
-    --accent: #0D9488;
-    --accent-hover: #0F766E;
-    --green: #16A34A;
-    --amber: #D97706;
-    --red: #DC2626;
-    --violet: #7C3AED;
-    --radius: 14px;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: var(--canvas);
-    color: var(--text);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    line-height: 1.55;
-    -webkit-font-smoothing: antialiased;
-  }
-  .container { max-width: 820px; margin: 0 auto; padding: 0 32px; }
-
+  :root { --bg:#0a0a0c; --surface:#0f0f13; --border:#1c1c24; --text:#e4e4e9; --muted:#737380; --muted2:#55555f; --green:#22c55e; --amber:#f59e0b; --red:#ef4444; --accent:#f5f5f5; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .container{max-width:720px;margin:0 auto;padding:0 24px}
+  
+  /* ASCII HEADER */
+  .ascii-header{font-family:'SF Mono','JetBrains Mono',monospace;font-size:11px;color:var(--muted2);padding:80px 0 0;text-align:center;line-height:1.6}
+  
   /* NAV */
-  nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(250,250,250,0.85); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); z-index: 100; }
-  .nav-inner { max-width: 820px; margin: 0 auto; padding: 14px 32px; display: flex; justify-content: space-between; align-items: center; }
-  .nav-logo { font-size: 15px; font-weight: 600; color: var(--text); text-decoration: none; letter-spacing: -0.2px; }
-  .nav-links { display: flex; gap: 6px; align-items: center; }
-  .nav-links a { font-size: 13px; color: var(--text-tertiary); text-decoration: none; padding: 6px 10px; border-radius: 6px; transition: all 0.15s; }
-  .nav-links a:hover { color: var(--text); background: rgba(0,0,0,0.04); }
-  .nav-cta { font-size: 13px; font-weight: 600; color: #FFF !important; background: var(--accent); text-decoration: none; padding: 7px 14px !important; border-radius: 8px !important; transition: background 0.15s; }
-  .nav-cta:hover { background: var(--accent-hover) !important; }
+  nav{display:flex;justify-content:center;align-items:center;gap:20px;padding:16px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;margin-bottom:80px}
+  .nav-brand{font-family:'SF Mono','JetBrains Mono',monospace;font-size:15px;color:var(--accent);text-decoration:none;letter-spacing:.5px}
+  .nav-brand .dot{color:var(--muted)}
+  nav a{font-size:12px;color:var(--muted);text-decoration:none;transition:color .15s}
+  nav a:hover{color:var(--text)}
+  .nav-cta{color:var(--accent)!important;border:1px solid var(--border);padding:4px 10px;border-radius:4px;font-size:11px}
+  .nav-cta:hover{border-color:var(--muted)}
 
   /* HERO */
-  .hero { padding: 160px 0 40px; position: relative; }
-  .hero .tagline { font-size: 13px; font-weight: 500; letter-spacing: 1.2px; color: var(--accent); text-transform: uppercase; margin-bottom: 20px; }
-  .hero h1 { font-size: 56px; font-weight: 600; letter-spacing: -2px; line-height: 1.08; color: var(--text); margin-bottom: 20px; max-width: 660px; }
-  .hero .deck { font-size: 17px; color: var(--text-muted); max-width: 560px; line-height: 1.6; }
+  .hero{padding:0 0 40px;text-align:center}
+  .hero h1{font-size:36px;font-weight:700;letter-spacing:-.5px;color:var(--accent);margin-bottom:16px;line-height:1.2}
+  .hero p{font-size:16px;color:var(--muted);max-width:560px;margin:0 auto 24px;line-height:1.6}
+  .hero-cta{display:inline-block;font-size:12px;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:6px 14px;border-radius:4px}
 
-  /* DIAGNOSTIC PANEL */
-  .diagnostic-panel {
-    background: #F8F8F8; border: 1px solid #E0E0E0; border-radius: 14px;
-    padding: 28px 32px; margin: 0 0 64px;
-    font-family: 'JetBrains Mono', 'SF Mono', monospace;
-    font-size: 12.5px; line-height: 1.85;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    max-width: 480px;
-  }
-  .diag-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid #E0E0E0; }
-  .diag-path { color: var(--accent); font-size: 12px; }
-  .diag-badge { color: var(--text-tertiary); font-size: 10.5px; }
-  .diag-row { display: flex; justify-content: space-between; padding: 5px 0; }
-  .diag-label { color: #737373; }
-  .diag-val { color: #3D3D3D; }
-  .diag-val--green { color: #16A34A; }
-  .diag-val--amber { color: #D97706; }
-  .diag-val--red { color: #DC2626; }
-  .diag-divider { border-top: 1px dashed #E0E0E0; margin: 10px 0; }
-  .diag-high .diag-val { color: #0A0A0A; font-weight: 600; }
-  .diag-footer { margin-top: 12px; padding-top: 12px; border-top: 1px solid #E0E0E0; display: flex; gap: 8px; align-items: baseline; color: var(--accent); }
-  .diag-footer span:last-child { color: #3D3D3D; }
-  .diag-footer strong { color: #0A0A0A; font-weight: 600; }
+  /* DIAGNOSTIC */
+  .diag{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:24px 28px;margin-bottom:80px;font-family:'SF Mono','JetBrains Mono',monospace;font-size:12px;line-height:1.8;max-width:560px;margin-left:auto;margin-right:auto}
+  .diag-path{color:var(--muted);margin-bottom:12px;display:block}
+  .diag-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px 20px;margin-bottom:16px}
+  .diag-row{display:flex;justify-content:space-between}
+  .diag-label{color:var(--muted2)}
+  .diag-val{color:var(--text)}
+  .diag-val--g{color:var(--green)}
+  .diag-val--a{color:var(--amber)}
+  .diag-val--r{color:var(--red)}
+  .diag-section{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;margin:16px 0 8px}
+  .diag-section strong{color:var(--text)}
+  .diag-section2{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;margin:12px 0 4px}
+  .diag-section2 strong{color:var(--green)}
+  .diag-rec{margin-top:12px;color:var(--green);font-size:11.5px}
 
   /* SECTIONS */
-  section { padding: 64px 0; }
-  .section-eyebrow { font-size: 12px; font-weight: 500; letter-spacing: 1.2px; color: var(--accent); text-transform: uppercase; margin-bottom: 16px; }
-  h2 { font-size: 36px; font-weight: 600; letter-spacing: -1px; line-height: 1.15; color: var(--text); margin-bottom: 16px; }
-  .section-lead { font-size: 16px; color: var(--text-muted); margin-bottom: 36px; max-width: 560px; line-height: 1.6; }
+  .section-label{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:20px}
+  h2{font-size:22px;font-weight:600;color:var(--accent);margin-bottom:12px;line-height:1.3}
+  .lead{font-size:15px;color:var(--muted);margin-bottom:32px;line-height:1.6}
 
-  /* CARDS */
-  .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .card-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-  .card {
-    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 28px; text-decoration: none; transition: all 0.2s ease; display: flex; flex-direction: column;
-  }
-  .card:hover { border-color: var(--border-strong); box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
-  .card-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(13,148,136,0.08); color: var(--accent); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; }
-  .card-audience { font-size: 11px; font-weight: 500; letter-spacing: 0.8px; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
-  .card h3 { font-size: 18px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
-  .card p { font-size: 13.5px; color: var(--text-tertiary); line-height: 1.5; flex: 1; }
-  .card-cta { margin-top: 16px; font-size: 13.5px; font-weight: 500; color: var(--text-muted); display: inline-flex; align-items: center; gap: 4px; }
-  .card:hover .card-cta { color: var(--text); }
+  /* SYSTEM LIST */
+  .sys-list{list-style:none;margin-bottom:64px}
+  .sys-list li{padding:24px 0;border-top:1px solid var(--border);display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start}
+  .sys-list li:last-child{border-bottom:1px solid var(--border)}
+  .sys-num{font-family:'SF Mono','JetBrains Mono',monospace;font-size:13px;color:var(--muted2)}
+  .sys-body h4{font-size:15px;font-weight:600;color:var(--accent);margin-bottom:4px}
+  .sys-body p{font-size:13.5px;color:var(--muted);line-height:1.5}
+
+  /* DEEPEST */
+  .deepest{border:1px solid var(--border);border-radius:6px;padding:24px 28px;margin-bottom:80px}
+  .deepest h4{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:8px}
+  .deepest p{font-size:13.5px;color:var(--muted);line-height:1.6;margin-bottom:14px}
+  .deepest-link{font-size:11px;color:var(--accent);text-decoration:none;text-transform:uppercase;letter-spacing:.8px}
+
+  /* PATHS */
+  .paths{margin-bottom:80px}
+  .path-item{display:block;padding:24px 0;border-top:1px solid var(--border);text-decoration:none;transition:background .15s}
+  .path-item:last-child{border-bottom:1px solid var(--border)}
+  .path-item:hover{background:var(--surface);margin:0 -16px;padding-left:16px;padding-right:16px;border-radius:4px}
+  .path-item .path-tag{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+  .path-item h4{font-size:16px;font-weight:600;color:var(--accent);margin-bottom:4px}
+  .path-item p{font-size:13.5px;color:var(--muted);line-height:1.5;margin-bottom:8px}
+  .path-item .path-link{font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.8px}
 
   /* TESTIMONIALS */
-  .testimonial-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  .t-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; position: relative; }
-  .t-card::before { content: '\201C'; position: absolute; top: 14px; left: 20px; font-size: 56px; line-height: 1; color: rgba(13,148,136,0.08); font-family: Georgia, serif; }
-  .t-card q { font-size: 14.5px; color: var(--text-muted); line-height: 1.6; display: block; position: relative; z-index: 1; margin-bottom: 14px; }
-  .t-card .t-author { font-size: 13.5px; font-weight: 600; color: var(--text); }
-  .t-card .t-role { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+  .quotes{margin-bottom:80px}
+  .quote{padding:24px 0;border-top:1px solid var(--border)}
+  .quote:last-child{border-bottom:1px solid var(--border)}
+  .quote blockquote{font-size:14px;color:var(--text);line-height:1.6;margin-bottom:8px}
+  .quote .q-attr{font-size:11px;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px}
 
-  /* ABOUT */
-  .about h3 { font-size: 20px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
-  .about .role { font-size: 14px; color: var(--text-tertiary); margin-bottom: 16px; }
-  .about p { font-size: 15px; color: var(--text-muted); line-height: 1.7; max-width: 560px; }
+  /* OPERATOR */
+  .operator{margin-bottom:80px}
+  .operator h3{font-size:18px;font-weight:600;color:var(--accent);margin-bottom:4px}
+  .operator .op-role{font-size:13px;color:var(--muted);margin-bottom:20px}
+  .operator .op-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;font-size:12px}
+  .operator .op-item{padding:8px 0}
+  .operator .op-item span:first-child{color:var(--muted2);margin-right:6px}
+  .operator .op-quote{font-size:14px;color:var(--muted);font-style:italic;margin-top:20px}
 
   /* CONTACT */
-  .contact-box { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; max-width: 480px; }
-  .field { margin-bottom: 18px; }
-  .field label { display: block; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-tertiary); margin-bottom: 6px; }
-  .field input, .field select, .field textarea { width: 100%; background: var(--canvas); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: 'Inter', sans-serif; font-size: 14px; color: var(--text); resize: vertical; }
-  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--border-strong); }
-  .field textarea { min-height: 70px; }
-  .btn { display: inline-block; background: var(--accent); color: #FFF; border: none; border-radius: 8px; padding: 10px 20px; font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; transition: background 0.15s; }
-  .btn:hover { background: var(--accent-hover); }
+  .contact{text-align:center;padding:40px 0 80px}
+  .contact h3{font-size:18px;color:var(--accent);margin-bottom:12px}
+  .contact p{font-size:14px;color:var(--muted);margin-bottom:20px}
+  .contact .contact-links{display:flex;gap:12px;justify-content:center}
+  .contact .contact-links a{font-size:12px;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:8px 16px;border-radius:4px}
+  .contact .contact-links a:hover{border-color:var(--muted)}
 
-  /* DIVIDER */
-  .section-divider { width: 100%; height: 1px; background: var(--border); margin: 16px 0; }
+  footer{padding:40px 0;text-align:center;border-top:1px solid var(--border)}
+  footer p{font-size:12px;color:var(--muted2)}
 
-  /* FOOTER */
-  footer { border-top: 1px solid var(--border); padding: 28px 0; margin-top: 16px; }
-  .footer-inner { max-width: 820px; margin: 0 auto; padding: 0 32px; display: flex; justify-content: space-between; align-items: center; }
-  .footer-mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-tertiary); }
-  .footer-links { display: flex; gap: 18px; }
-  .footer-links a { font-size: 13px; color: var(--text-tertiary); text-decoration: none; }
-  .footer-links a:hover { color: var(--text); }
-
-  @media (max-width: 700px) {
-    .hero h1 { font-size: 34px; letter-spacing: -1px; }
-    .card-grid, .card-grid-3, .testimonial-grid { grid-template-columns: 1fr; }
-    .footer-inner { flex-direction: column; gap: 10px; }
-    h2 { font-size: 26px; }
+  @media(max-width:640px){
+    .hero h1{font-size:26px}
+    .diag-grid{grid-template-columns:1fr}
+    .op-grid{grid-template-columns:1fr}
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <a href="/" class="nav-logo">firsthand</a>
-    <div class="nav-links">
-      <a href="/rewire">rewire</a>
-      <a href="/studio">studio</a>
-      <a href="/cohort">cohort</a>
-      <a href="/diagnostic" class="nav-cta">diagnostic</a>
-    </div>
-  </div>
-</nav>
+<div class="ascii-header">
+  ~/<span style="color:var(--text)">firsthand</span>/<span style="color:var(--text)">main</span> * BOOKING Q3 · REWIRE · COHORT · STUDIO
+</div>
 
-<main class="container">
+<div class="container">
+
+  <nav>
+    <a href="/" class="nav-brand">FIRST<span class="dot">.</span>HAND</a>
+    <a href="/rewire">rewire</a>
+    <a href="/studio">studio</a>
+    <a href="/cohort">cohort</a>
+    <a href="/diagnostic" class="nav-cta">DIAGNOSTIC</a>
+  </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <div class="tagline">AI-native transformation, firsthand.</div>
-    <h1>Instale o sistema que empresas AI-native operam.</h1>
-    <p class="deck">As empresas que estão na frente estão mudando como decisões são tomadas, como código é entregue, o que líderes inspecionam e quais processos deixam de existir. Nós trazemos a experiência de operação e a profundidade de engenharia para tornar essa mudança real.</p>
+    <h1>Install the system AI-native companies run on.</h1>
+    <p>The teams pulling ahead are changing how decisions get made, how code ships, what leaders inspect, and what work stops existing. We bring the operating experience and engineering depth to make that change real.</p>
+    <a href="#talk" class="hero-cta">TEXT US →</a>
   </section>
 
   <!-- DIAGNOSTIC -->
-  <div class="diagnostic-panel">
-    <div class="diag-header">
-      <span class="diag-path">~/firsthand/diagnostic</span>
-      <span class="diag-badge">v2.1</span>
+  <div class="diag">
+    <span class="diag-path">~/firsthand/diagnostic</span>
+    <div class="diag-grid">
+      <div class="diag-row"><span class="diag-label">licenses</span><span class="diag-val diag-val--g">active</span></div>
+      <div class="diag-row"><span class="diag-label">new roles</span><span class="diag-val diag-val--r">missing</span></div>
+      <div class="diag-row"><span class="diag-label">codebase readiness</span><span class="diag-val diag-val--a">uneven</span></div>
+      <div class="diag-row"><span class="diag-label">process</span><span class="diag-val diag-val--r">pre-ai</span></div>
+      <div class="diag-row"><span class="diag-label">leadership skills</span><span class="diag-val diag-val--r">poor</span></div>
+      <div class="diag-row"><span class="diag-label">team confidence</span><span class="diag-val diag-val--a">split</span></div>
     </div>
-    <div class="diag-row"><span class="diag-label">licenses</span><span class="diag-val diag-val--green">active</span></div>
-    <div class="diag-row"><span class="diag-label">operating model</span><span class="diag-val diag-val--red">pre-ai</span></div>
-    <div class="diag-row"><span class="diag-label">codebase readiness</span><span class="diag-val diag-val--amber">uneven</span></div>
-    <div class="diag-row"><span class="diag-label">leadership skills</span><span class="diag-val diag-val--red">poor</span></div>
-    <div class="diag-row"><span class="diag-label">team confidence</span><span class="diag-val diag-val--amber">split</span></div>
-    <div class="diag-divider"></div>
-    <div class="diag-row diag-high"><span class="diag-label">maturity level</span><span class="diag-val">N2 — team productivity</span></div>
-    <div class="diag-row diag-high"><span class="diag-label">target level</span><span class="diag-val diag-val--green">N4 — decision intelligence</span></div>
-    <div class="diag-footer"><span>→</span><span>recommended path <strong>redesign how work moves</strong></span></div>
+    <div class="diag-section">MATURITY <strong>3 PILLARS</strong></div>
+    <div class="diag-row"><span class="diag-label">culture</span><span class="diag-val diag-val--g">MAKING PROGRESS</span></div>
+    <div class="diag-row"><span class="diag-label">technical readiness</span><span class="diag-val diag-val--a">UNEVEN</span></div>
+    <div class="diag-row"><span class="diag-label">company system</span><span class="diag-val diag-val--r">NOT INSTALLED</span></div>
+    <div class="diag-section2">WORK MOVED <strong>THIS QUARTER</strong></div>
+    <div class="diag-rec">$ recommended path → redesign how work moves</div>
   </div>
 
-  <div class="section-divider"></div>
+  <!-- THE SYSTEM -->
+  <div class="section-label">THE SYSTEM</div>
+  <h2>Your best builders are already moving faster. The company around them usually is not.</h2>
+  <p class="lead">We help turn isolated wins into repeatable company muscle.</p>
 
-  <!-- O SISTEMA -->
-  <section>
-    <div class="section-eyebrow">O Sistema</div>
-    <h2>Seis pilares para operação AI‑native</h2>
-    <p class="section-lead">Seus melhores builders já estão mais rápidos. A empresa ao redor deles geralmente não está. Transformamos vitórias isoladas em capacitação repetível.</p>
+  <ul class="sys-list">
+    <li><span class="sys-num">01</span><div class="sys-body"><h4>Workflows</h4><p>Define what work agents do, what work humans keep, and where review lives across functions.</p></div></li>
+    <li><span class="sys-num">02</span><div class="sys-body"><h4>System readiness</h4><p>Ensure the shared context, docs, permissions, data, and feedback loops agents need to work safely.</p></div></li>
+    <li><span class="sys-num">03</span><div class="sys-body"><h4>Rituals</h4><p>How work gets prioritized, planned, and reviewed. Remove what was created for a different speed of work.</p></div></li>
+    <li><span class="sys-num">04</span><div class="sys-body"><h4>Roles</h4><p>Redefine roles and responsibilities when anyone can build. Uplevel your best builders and remove the friction they face.</p></div></li>
+    <li><span class="sys-num">05</span><div class="sys-body"><h4>Metrics</h4><p>Measure how AI adoption changes the company. Hold yourself accountable to new standards of velocity and quality.</p></div></li>
+    <li><span class="sys-num">06</span><div class="sys-body"><h4>Leadership skills</h4><p>How execs inspect the work, model the new behavior, and reinforce the pattern across the company.</p></div></li>
+  </ul>
 
-    <div class="card-grid card-grid-3">
-      <div class="card"><div class="card-icon">01</div><h3>Workflows</h3><p>O que agentes executam, o que humanos mantêm, e onde a revisão acontece.</p></div>
-      <div class="card"><div class="card-icon">02</div><h3>System Readiness</h3><p>Contexto, docs, dados e feedback loops que agentes precisam para operar.</p></div>
-      <div class="card"><div class="card-icon">03</div><h3>Rituais</h3><p>Como o trabalho é priorizado, planejado e revisado na velocidade da AI.</p></div>
-      <div class="card"><div class="card-icon">04</div><h3>Roles</h3><p>Redefina papéis quando qualquer pessoa pode buildar. Eleve seus melhores.</p></div>
-      <div class="card"><div class="card-icon">05</div><h3>Métricas</h3><p>Meça adoção com novos padrões de velocidade e qualidade.</p></div>
-      <div class="card"><div class="card-icon">06</div><h3>Leadership</h3><p>Como executivos modelam, inspecionam e reforçam o novo padrão.</p></div>
+  <!-- WHERE WE GO DEEPEST -->
+  <div class="section-label">WHERE WE GO DEEPEST</div>
+  <div class="deepest">
+    <h4>Builder teams are often the wedge.</h4>
+    <p>We work across the company, but our deepest expertise is engineering, product, and design. We partner with senior leaders who can make AI a reality for the whole team. We go beyond the hype to repo readiness, CI/CD speed, model + harness optimization, and the explicit contract between humans and AI.</p>
+    <a href="/rewire" class="deepest-link">EXPLORE AI TRANSFORMATION →</a>
+  </div>
+
+  <!-- PATHS IN -->
+  <div class="section-label">PATHS IN</div>
+  <div class="paths">
+    <a href="/rewire" class="path-item">
+      <div class="path-tag">AI TRANSFORMATION</div>
+      <h4>Company Operating System.</h4>
+      <p>Whole-company transformation that starts where the work is most technical, then moves through GTM, ops, finance, and leadership.</p>
+      <span class="path-link">EXPLORE AI TRANSFORMATION →</span>
+    </a>
+    <a href="/studio" class="path-item">
+      <div class="path-tag">AI EXECUTIVE COACHING</div>
+      <h4>Executive Fluency.</h4>
+      <p>General fluency or peer coaching matched to your exact seat. CPTO, VP Engineering, VP Product.</p>
+      <span class="path-link">EXPLORE EXECUTIVE FLUENCY →</span>
+    </a>
+    <a href="/cohort" class="path-item">
+      <div class="path-tag">AI TRAINING</div>
+      <h4>Courses + Team Training.</h4>
+      <p>Join our cohort, book private team sessions, or customize an executive-level training.</p>
+      <span class="path-link">EXPLORE TRAINING OPTIONS →</span>
+    </a>
+    <a href="/diagnostic" class="path-item">
+      <div class="path-tag">AI DIAGNOSTIC</div>
+      <h4>Maturity Assessment.</h4>
+      <p>Three assessments. Your AI fluency, your team's level, or your company's maturity. Free, 3-7 minutes.</p>
+      <span class="path-link">TAKE DIAGNOSTIC →</span>
+    </a>
+  </div>
+
+  <!-- WHAT OPERATORS SAY -->
+  <div class="section-label">WHAT OPERATORS SAY</div>
+  <div class="quotes">
+    <div class="quote">
+      <blockquote>"We need people on the edge, on the bleeding edge. I'm thrilled."</blockquote>
+      <div class="q-attr">PRODUCT EXECUTIVE <span style="color:var(--muted)">Enterprise software</span></div>
     </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- SERVIÇOS -->
-  <section>
-    <div class="section-eyebrow">Serviços</div>
-    <h2>Os caminhos de entrada</h2>
-
-    <div class="card-grid">
-      <a href="/rewire" class="card">
-        <div class="card-icon" style="background:rgba(13,148,136,0.1);">rw</div>
-        <div class="card-audience">Para empresas</div>
-        <h3>rewire</h3>
-        <p>Transformação AI-native. Diagnóstico N1→N5, 2 dias de imersão com a liderança, 90 dias de acompanhamento.</p>
-        <div class="card-cta">Saiba mais →</div>
-      </a>
-      <a href="/studio" class="card">
-        <div class="card-icon" style="background:rgba(217,119,6,0.1);color:var(--amber);">st</div>
-        <div class="card-audience">Para executivos</div>
-        <h3>studio</h3>
-        <p>Coaching 1:1. Fluência de AI pareada com seu cargo: CPTO, VP Engineering, VP Product.</p>
-        <div class="card-cta">Saiba mais →</div>
-      </a>
-      <a href="/cohort" class="card">
-        <div class="card-icon" style="background:rgba(22,163,74,0.1);color:var(--green);">ch</div>
-        <div class="card-audience">Para líderes</div>
-        <h3>cohort</h3>
-        <p>AI-Native Training. 2 dias live, formato turma. 3 meses de comunidade. Agosto 2026.</p>
-        <div class="card-cta">Saiba mais →</div>
-      </a>
-      <a href="/diagnostic" class="card">
-        <div class="card-icon" style="background:rgba(124,58,237,0.08);color:var(--violet);">dx</div>
-        <div class="card-audience">Para todos</div>
-        <h3>diagnostic</h3>
-        <p>Três assessments. Seu nível de fluência, o nível do seu time, ou a maturidade da sua empresa.</p>
-        <div class="card-cta">Fazer diagnóstico →</div>
-      </a>
+    <div class="quote">
+      <blockquote>"I think actually this has changed management more than anything else."</blockquote>
+      <div class="q-attr">FOUNDER / CEO</div>
     </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- DEPOIMENTOS -->
-  <section>
-    <div class="section-eyebrow">O que operadores dizem</div>
-    <div class="testimonial-grid">
-      <div class="t-card">
-        <q>Raro encontrar um programa executivo que respeita seu tempo e assume que você já passou do 101. Saí com um plano para acelerar transformação AI.</q>
-        <div class="t-author">Aluno, AI-Native Training</div>
-        <div class="t-role">Turma piloto</div>
-      </div>
-      <div class="t-card">
-        <q>Finalmente alguém que fala de AI com substância de engenharia, não com buzzword de consultoria. O diagnóstico de maturidade já vale o investimento.</q>
-        <div class="t-author">CTO, empresa de software</div>
-        <div class="t-role">200 pessoas</div>
-      </div>
+    <div class="quote">
+      <blockquote>"A genuinely high-signal program from Fernanda. Clear frameworks, sharp peer group, and — most importantly — practical enough that I walked out with a plan for how to accelerate AI transformation in my org. Rare to find an exec course that respects your time and assumes you're already past the 101."</blockquote>
+      <div class="q-attr">SVP PRODUCT</div>
     </div>
-  </section>
+  </div>
 
-  <div class="section-divider"></div>
-
-  <!-- ABOUT -->
-  <section class="about">
-    <div class="section-eyebrow">Quem está por trás</div>
+  <!-- THE OPERATOR -->
+  <div class="section-label">THE OPERATOR</div>
+  <div class="operator">
     <h3>Fernanda Faria</h3>
-    <div class="role">CPTO, Zé Delivery (AB InBev) · Founder, firsthand</div>
-    <p>Eu estive na sua cadeira. Como CPTO do Zé Delivery, operei a transição AI-native na prática — com restrições reais de budget, legado, resistência cultural e prazos que não esperam. Não sou consultora. Eu estou vivendo isso. Firsthand é onde eu ajudo outras lideranças a fazerem o mesmo.</p>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <!-- CONTACT -->
-  <section>
-    <div class="section-eyebrow">Vamos conversar</div>
-    <div class="contact-box">
-      <div class="field"><label>Nome</label><input type="text" placeholder="Seu nome"></div>
-      <div class="field"><label>Email</label><input type="email" placeholder="seu@email.com"></div>
-      <div class="field">
-        <label>No que podemos ajudar?</label>
-        <select>
-          <option>Selecione…</option>
-          <option>rewire — AI-Native Transformation</option>
-          <option>studio — AI Executive Coaching</option>
-          <option>cohort — AI-Native Training</option>
-          <option>diagnostic — AI Maturity Assessment</option>
-          <option>Não tenho certeza ainda</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Tamanho do time</label>
-        <select>
-          <option>Selecione…</option>
-          <option>1–10</option>
-          <option>11–50</option>
-          <option>51–200</option>
-          <option>201–1.000</option>
-          <option>1.000+</option>
-        </select>
-      </div>
-      <div class="field"><label>Contexto rápido</label><textarea placeholder="Onde AI está funcionando e onde o sistema está travado?"></textarea></div>
-      <button class="btn">Enviar</button>
+    <div class="op-role">CPTO · ZÉ DELIVERY (AB INBEV) · FOUNDER, FIRSTHAND</div>
+    <div class="op-grid">
+      <div class="op-item"><span>seat</span>CPTO</div>
+      <div class="op-item"><span>builds</span>firsthand</div>
+      <div class="op-item"><span>operates</span>hands-on, in the stack</div>
     </div>
-  </section>
+    <div class="op-quote">"We've been in your seat."</div>
+  </div>
 
-</main>
+  <!-- LET'S CONNECT -->
+  <div class="section-label" id="talk">LET'S CONNECT</div>
+  <div class="contact">
+    <h3>Tell us where AI is working and where the system is stuck.</h3>
+    <div class="contact-links">
+      <a href="#">TEXT US</a>
+      <a href="#">EMAIL</a>
+      <a href="/diagnostic">TAKE DIAGNOSTIC</a>
+    </div>
+  </div>
+
+</div>
 
 <footer>
-  <div class="footer-inner">
-    <div class="footer-mono">firsthand · 2026</div>
-    <div class="footer-links">
-      <a href="/rewire">rewire</a>
-      <a href="/studio">studio</a>
-      <a href="/cohort">cohort</a>
-      <a href="/diagnostic">diagnostic</a>
-    </div>
-  </div>
+  <p>firsthand · AI-native transformation, firsthand. · 2026</p>
 </footer>
 
 </body>
