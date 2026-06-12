@@ -25,31 +25,26 @@
   .nav-cta { font-size: 13px; color: var(--text); text-decoration: none; padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.2s; }
   .nav-cta:hover { border-color: var(--muted); }
 
-  .hero { padding: 160px 0 80px; }
-  .hero .overline { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; color: var(--violet); margin-bottom: 20px; }
-  .hero h1 { font-size: 56px; font-weight: 600; letter-spacing: -1.8px; line-height: 1.08; color: var(--accent); margin-bottom: 24px; max-width: 700px; }
-  .hero p { font-size: 18px; color: var(--muted); max-width: 540px; line-height: 1.6; }
+  .hero { padding: 160px 0 48px; }
+  .hero h1 { font-size: 48px; font-weight: 600; letter-spacing: -1.5px; line-height: 1.1; color: var(--accent); margin-bottom: 24px; max-width: 700px; }
+  .hero .deck { font-size: 18px; color: var(--muted); max-width: 580px; line-height: 1.65; margin-bottom: 48px; }
 
   section { padding: 80px 0; }
   .section-label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 32px; }
-  h2 { font-size: 30px; font-weight: 600; letter-spacing: -0.6px; color: var(--accent); margin-bottom: 20px; }
+  h2 { font-size: 28px; font-weight: 600; letter-spacing: -0.6px; color: var(--accent); margin-bottom: 20px; }
 
-  .text-block { max-width: 600px; }
-  .text-block p { font-size: 15px; color: var(--text); line-height: 1.7; margin-bottom: 16px; }
-
-  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 28px; text-decoration: none; transition: border-color 0.2s; display: flex; flex-direction: column; }
-  .card:hover { border-color: var(--muted); }
-  .card-icon { font-family: var(--mono); font-size: 22px; margin-bottom: 14px; }
-  .card h3 { font-size: 16px; font-weight: 600; color: var(--accent); margin-bottom: 6px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .card { background: var(--surface); padding: 28px; text-decoration: none; transition: background 0.2s; display: flex; flex-direction: column; }
+  .card:hover { background: #16161f; }
+  .card-icon { font-family: var(--mono); font-size: 18px; margin-bottom: 12px; }
+  .card h3 { font-size: 15px; font-weight: 600; color: var(--accent); margin-bottom: 6px; }
   .card p { font-size: 13px; color: var(--muted); line-height: 1.5; flex: 1; }
-  .card .arrow { margin-top: 14px; font-size: 13px; color: var(--muted); }
 
-  .about { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-  .about-text h3 { font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .about-text h3 { font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
   .about-text .role { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
   .about-text p { font-size: 14px; color: var(--text); line-height: 1.7; }
-  .about-quote { font-size: 18px; color: var(--accent); line-height: 1.5; font-style: italic; padding: 32px; border-left: 2px solid var(--violet); }
+  .about-quote { font-size: 18px; color: var(--accent); line-height: 1.5; padding: 32px; border-left: 2px solid var(--violet); font-style: italic; }
 
   .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
@@ -58,9 +53,9 @@
   .footer-mono { font-family: var(--mono); font-size: 12px; color: var(--muted); }
 
   @media (max-width: 700px) {
-    .hero h1 { font-size: 36px; }
+    .hero h1 { font-size: 34px; }
     .cards { grid-template-columns: 1fr; }
-    .about { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -81,33 +76,29 @@
 <main class="container">
 
   <section class="hero">
-    <div class="overline">AI-native transformation, firsthand.</div>
-    <h1>Sua empresa já usa AI.<br>Mas não tem um sistema.</h1>
-    <p>Nós ajudamos lideranças de tecnologia a transformar como suas empresas operam — com quem já fez e está vivendo AI-first.</p>
+    <h1>Instale o sistema que empresas AI-native operam.</h1>
+    <p class="deck">As empresas que estão na frente estão mudando como decisões são tomadas, como código é entregue, o que líderes inspecionam e quais processos deixam de existir. Nós trazemos a experiência de operação e a profundidade de engenharia para tornar essa mudança real.</p>
   </section>
 
   <hr class="divider">
 
   <section>
-    <div class="section-label">O que fazemos</div>
+    <div class="section-label">O sistema</div>
     <div class="cards">
       <a href="/rewire" class="card">
         <div class="card-icon" style="color:var(--violet);">◉</div>
         <h3>rewire</h3>
-        <p>Transformação AI-native completa. Diagnóstico N1→N5, 2 dias de imersão com a liderança, 90 dias de acompanhamento.</p>
-        <div class="arrow">Para empresas →</div>
+        <p>Transformação AI-native. Diagnóstico N1→N5, 2 dias de imersão, 90 dias de acompanhamento. Para empresas.</p>
       </a>
       <a href="/studio" class="card">
         <div class="card-icon" style="color:var(--amber);">◈</div>
         <h3>studio</h3>
-        <p>Coaching executivo 1:1. Fluência de AI para seu contexto de liderança. Sessions pareadas com seu cargo exato.</p>
-        <div class="arrow">Para executivos →</div>
+        <p>Coaching executivo 1:1. Fluência de AI pareada com seu cargo. Para CPTOs, VPs, CTOs.</p>
       </a>
       <a href="/cohort" class="card">
         <div class="card-icon" style="color:var(--green);">▣</div>
         <h3>cohort</h3>
-        <p>Turma aberta. 2 dias live. Mesmo framework da transformação, formato cohort. Comunidade por 3 meses.</p>
-        <div class="arrow">Para líderes →</div>
+        <p>AI-Native Training. 2 dias live, formato turma. Comunidade por 3 meses. Para líderes.</p>
       </a>
     </div>
   </section>
@@ -116,14 +107,14 @@
 
   <section>
     <div class="section-label">Quem está por trás</div>
-    <div class="about">
+    <div class="two-col">
       <div class="about-text">
         <h3>Fernanda Faria</h3>
         <div class="role">CPTO, Zé Delivery (AB InBev)</div>
-        <p>Eu estive na sua cadeira. Como CPTO do Zé Delivery, operei a transição AI-native na prática — com restrições reais de budget, legado, resistência cultural e prazos que não esperam. Não sou consultora. Eu estou vivendo isso. Firsthand é onde eu ajudo outras lideranças a fazerem o mesmo.</p>
+        <p>Eu estive na sua cadeira. Como CPTO do Zé Delivery, operei a transição AI-native na prática — com restrições reais de budget, legado, resistência e prazos. Não sou consultora. Eu estou vivendo isso. Firsthand é onde eu ajudo outras lideranças a fazerem o mesmo.</p>
       </div>
       <div class="about-quote">
-        "A diferença entre as empresas que têm ganhos de 2x, 5x, 10x com AI e as que só acumulam tokens não são as ferramentas — é o sistema operacional."
+        "A diferença entre as empresas que têm ganhos de 2x, 5x, 10x e as que só acumulam tokens não são as ferramentas — é o sistema."
       </div>
     </div>
   </section>
