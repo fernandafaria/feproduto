@@ -3,59 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>firsthand — AI-native transformation, firsthand.</title>
+<title>firsthand · AI-native transformation, firsthand.</title>
 <style>
   :root {
-    --bg: #08080c; --surface: #111118; --border: #1e1e2a;
-    --text: #e5e5e9; --muted: #6b6b7b; --accent: #f5f5f5;
-    --green: #34d399; --amber: #fbbf24; --violet: #a78bfa;
+    --bg: #0a0a0b; --surface: #111115; --border: #1c1c22;
+    --text: #d1d1d6; --muted: #6e6e78; --accent: #f5f5f5;
+    --green: #22c55e; --amber: #f59e0b; --violet: #a78bfa;
     --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --mono: 'JetBrains Mono', 'Fira Code', monospace;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-  .container { max-width: 880px; margin: 0 auto; padding: 0 24px; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+  .container { max-width: 780px; margin: 0 auto; padding: 0 28px; }
 
-  nav { position: fixed; top: 0; width: 100%; background: rgba(8,8,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 100; }
-  .nav-inner { max-width: 880px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
-  .nav-logo { font-family: var(--mono); font-size: 14px; color: var(--accent); text-decoration: none; }
-  .nav-links { display: flex; gap: 16px; }
-  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+  nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(10,10,11,0.94); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); z-index: 100; }
+  .nav-inner { max-width: 780px; margin: 0 auto; padding: 12px 28px; display: flex; justify-content: space-between; align-items: center; }
+  .nav-logo { font-family: var(--mono); font-size: 13px; font-weight: 500; color: var(--accent); text-decoration: none; letter-spacing: -0.2px; }
+  .nav-links { display: flex; gap: 18px; align-items: center; }
+  .nav-links a { font-size: 12.5px; color: var(--muted); text-decoration: none; transition: color 0.15s; }
   .nav-links a:hover { color: var(--text); }
-  .nav-cta { font-size: 13px; color: var(--text); text-decoration: none; padding: 6px 14px; border: 1px solid var(--border); border-radius: 6px; transition: border-color 0.2s; }
+  .nav-cta { font-size: 12px; color: var(--text); text-decoration: none; padding: 5px 12px; border: 1px solid var(--border); border-radius: 5px; transition: border-color 0.15s; }
   .nav-cta:hover { border-color: var(--muted); }
 
-  .hero { padding: 160px 0 48px; }
-  .hero h1 { font-size: 48px; font-weight: 600; letter-spacing: -1.5px; line-height: 1.1; color: var(--accent); margin-bottom: 24px; max-width: 700px; }
-  .hero .deck { font-size: 18px; color: var(--muted); max-width: 580px; line-height: 1.65; margin-bottom: 48px; }
+  .hero { padding: 140px 0 36px; }
+  .hero .tagline { font-size: 13px; color: var(--muted); font-weight: 400; margin-bottom: 20px; }
+  .hero h1 { font-size: 38px; font-weight: 600; letter-spacing: -0.8px; line-height: 1.15; color: var(--accent); margin-bottom: 20px; max-width: 640px; }
+  .hero .deck { font-size: 15px; color: var(--muted); max-width: 560px; line-height: 1.6; }
 
-  section { padding: 80px 0; }
-  .section-label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 32px; }
-  h2 { font-size: 28px; font-weight: 600; letter-spacing: -0.6px; color: var(--accent); margin-bottom: 20px; }
+  .terminal {
+    background: #0c0c12; border: 1px solid #1a1a24; border-radius: 8px;
+    padding: 22px 26px; font-family: var(--mono); font-size: 12.5px; line-height: 1.75;
+    color: var(--muted); margin: 0 0 44px;
+  }
+  .terminal .t-path { color: #a0a0ab; }
+  .terminal .t-green { color: #22c55e; }
+  .terminal .t-amber { color: #f59e0b; }
+  .terminal .t-red { color: #ef4444; }
+  .terminal .t-accent { color: var(--accent); }
+  .terminal .t-arrow { color: var(--muted); margin-top: 8px; }
 
-  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-  .card { background: var(--surface); padding: 28px; text-decoration: none; transition: background 0.2s; display: flex; flex-direction: column; }
-  .card:hover { background: #16161f; }
-  .card-icon { font-family: var(--mono); font-size: 18px; margin-bottom: 12px; }
-  .card h3 { font-size: 15px; font-weight: 600; color: var(--accent); margin-bottom: 6px; }
-  .card p { font-size: 13px; color: var(--muted); line-height: 1.5; flex: 1; }
+  section { padding: 44px 0; }
+  .section-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 1.6px; color: var(--muted); margin-bottom: 22px; font-weight: 500; }
+  h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.3px; color: var(--accent); margin-bottom: 16px; }
+  p { font-size: 14px; color: var(--text); line-height: 1.65; }
+  p.muted { color: var(--muted); }
 
-  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
-  .about-text h3 { font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
-  .about-text .role { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
-  .about-text p { font-size: 14px; color: var(--text); line-height: 1.7; }
-  .about-quote { font-size: 18px; color: var(--accent); line-height: 1.5; padding: 32px; border-left: 2px solid var(--violet); font-style: italic; }
+  .services { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .svc { background: var(--surface); padding: 26px 28px; }
+  .svc-tag { font-size: 9.5px; text-transform: uppercase; letter-spacing: 1.2px; color: var(--muted); margin-bottom: 10px; }
+  .svc h3 { font-size: 15px; font-weight: 600; color: var(--accent); margin-bottom: 6px; }
+  .svc p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .svc-link { display: inline-block; margin-top: 14px; font-size: 12.5px; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); padding-bottom: 1px; transition: border-color 0.15s; }
+  .svc-link:hover { border-color: var(--muted); }
+
+  .checklist { list-style: none; }
+  .checklist li { font-size: 13.5px; color: var(--text); padding: 8px 0; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist .chk { color: var(--muted); font-family: var(--mono); font-size: 12px; min-width: 20px; }
+
+  .testimonials { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
+  .testimonial { background: var(--surface); padding: 22px 24px; }
+  .testimonial blockquote { font-size: 13px; color: var(--text); line-height: 1.6; margin-bottom: 10px; }
+  .testimonial .attr { font-size: 11.5px; color: var(--muted); }
+
+  .about { padding: 32px 0 0; }
+  .about h3 { font-size: 16px; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
+  .about .role { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .about p { font-size: 13.5px; color: var(--text); line-height: 1.7; max-width: 520px; }
+
+  .contact { margin: 48px 0 80px; }
+  .contact-box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 30px; max-width: 500px; }
+  .field { margin-bottom: 18px; }
+  .field label { display: block; font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; color: var(--muted); margin-bottom: 5px; }
+  .field input, .field select, .field textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 5px; padding: 9px 11px; font-family: var(--font); font-size: 13px; color: var(--text); resize: vertical; }
+  .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--muted); }
+  .field textarea { min-height: 70px; }
+  .btn { display: inline-block; background: var(--accent); color: var(--bg); border: none; border-radius: 5px; padding: 9px 18px; font-family: var(--font); font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: none; transition: opacity 0.15s; }
+  .btn:hover { opacity: 0.85; }
 
   .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
-  footer { border-top: 1px solid var(--border); padding: 32px 0; margin-top: 80px; }
-  .footer-inner { max-width: 880px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
-  .footer-mono { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+  footer { border-top: 1px solid var(--border); padding: 28px 0; margin-top: 40px; }
+  .footer-inner { max-width: 780px; margin: 0 auto; padding: 0 28px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-mono { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+  .footer-links { display: flex; gap: 16px; }
+  .footer-links a { font-size: 12.5px; color: var(--muted); text-decoration: none; }
+  .footer-links a:hover { color: var(--text); }
 
-  @media (max-width: 700px) {
-    .hero h1 { font-size: 34px; }
-    .cards { grid-template-columns: 1fr; }
-    .two-col { grid-template-columns: 1fr; }
+  @media (max-width: 660px) {
+    .hero h1 { font-size: 28px; }
+    .services, .testimonials { grid-template-columns: 1fr; }
+    .footer-inner { flex-direction: column; gap: 10px; }
   }
 </style>
 </head>
@@ -68,54 +106,143 @@
       <a href="/rewire">rewire</a>
       <a href="/studio">studio</a>
       <a href="/cohort">cohort</a>
+      <a href="/diagnostic" class="nav-cta">diagnostic</a>
     </div>
-    <a href="/diagnostic" class="nav-cta">diagnostic</a>
   </div>
 </nav>
 
 <main class="container">
 
+  <!-- HERO -->
   <section class="hero">
+    <div class="tagline">AI-native transformation, firsthand.</div>
     <h1>Instale o sistema que empresas AI-native operam.</h1>
     <p class="deck">As empresas que estão na frente estão mudando como decisões são tomadas, como código é entregue, o que líderes inspecionam e quais processos deixam de existir. Nós trazemos a experiência de operação e a profundidade de engenharia para tornar essa mudança real.</p>
   </section>
 
-  <hr class="divider">
+  <!-- DIAGNOSTIC -->
+  <div class="terminal">
+    ~/firsthand/diagnostic<br><br>
+    <span class="t-path">licenses</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-green">active</span><br>
+    <span class="t-path">operating model</span>&nbsp;&nbsp;&nbsp;<span class="t-red">pre-ai</span><br>
+    <span class="t-path">codebase readiness</span>&nbsp;<span class="t-amber">uneven</span><br>
+    <span class="t-path">leadership skills</span>&nbsp;&nbsp;<span class="t-red">poor</span><br>
+    <span class="t-path">team confidence</span>&nbsp;&nbsp;&nbsp;<span class="t-amber">split</span><br>
+    <span class="t-path">maturity level</span>&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-amber">N2 — team productivity</span><br>
+    <span class="t-path">target level</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-green">N4 — decision intelligence</span><br>
+    <div class="t-arrow">→ <span class="t-accent">recommended path</span>&nbsp;redesign how work moves</div>
+  </div>
 
+  <!-- THE SYSTEM -->
   <section>
     <div class="section-label">O sistema</div>
-    <div class="cards">
-      <a href="/rewire" class="card">
-        <div class="card-icon" style="color:var(--violet);">◉</div>
+    <h2>Seis pilares para operação AI‑native</h2>
+    <p class="muted" style="margin-bottom:24px;">Seus melhores builders já estão mais rápidos. A empresa ao redor deles geralmente não está. Nós transformamos vitórias isoladas em capacitação repetível.</p>
+
+    <div class="services">
+      <div class="svc"><div class="svc-tag">01</div><h3>Workflows</h3><p>Defina o que agentes executam, o que humanos mantêm, e onde a revisão acontece em cada função.</p></div>
+      <div class="svc"><div class="svc-tag">02</div><h3>System Readiness</h3><p>Garanta o contexto compartilhado, documentação, permissões, dados e feedback loops que agentes precisam para operar com segurança.</p></div>
+      <div class="svc"><div class="svc-tag">03</div><h3>Rituais</h3><p>Como o trabalho é priorizado, planejado e revisado. Remova o que foi criado para uma velocidade de trabalho que já não existe.</p></div>
+      <div class="svc"><div class="svc-tag">04</div><h3>Roles</h3><p>Redefina papéis e responsabilidades quando qualquer pessoa pode buildar. Eleve seus melhores builders e remova o atrito que enfrentam.</p></div>
+      <div class="svc"><div class="svc-tag">05</div><h3>Métricas</h3><p>Meça como a adoção de AI transforma a empresa. Responsabilize-se por novos padrões de velocidade e qualidade.</p></div>
+      <div class="svc"><div class="svc-tag">06</div><h3>Leadership Skills</h3><p>Como executivos inspecionam o trabalho, modelam o novo comportamento e reforçam o padrão em toda a empresa.</p></div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- SERVICES -->
+  <section>
+    <div class="section-label">Serviços</div>
+    <h2>Os caminhos de entrada</h2>
+
+    <div class="services">
+      <a href="/rewire" class="svc" style="text-decoration:none;">
+        <div class="svc-tag">Para empresas</div>
         <h3>rewire</h3>
-        <p>Transformação AI-native. Diagnóstico N1→N5, 2 dias de imersão, 90 dias de acompanhamento. Para empresas.</p>
+        <p>Transformação AI-native completa. Diagnóstico N1→N5, 2 dias de imersão com a liderança, 90 dias de acompanhamento.</p>
+        <div class="svc-link">Saiba mais →</div>
       </a>
-      <a href="/studio" class="card">
-        <div class="card-icon" style="color:var(--amber);">◈</div>
+      <a href="/studio" class="svc" style="text-decoration:none;">
+        <div class="svc-tag">Para executivos</div>
         <h3>studio</h3>
-        <p>Coaching executivo 1:1. Fluência de AI pareada com seu cargo. Para CPTOs, VPs, CTOs.</p>
+        <p>Coaching executivo 1:1. Fluência de AI pareada com seu cargo exato: CPTO, VP Engineering, VP Product.</p>
+        <div class="svc-link">Saiba mais →</div>
       </a>
-      <a href="/cohort" class="card">
-        <div class="card-icon" style="color:var(--green);">▣</div>
+      <a href="/cohort" class="svc" style="text-decoration:none;">
+        <div class="svc-tag">Para líderes</div>
         <h3>cohort</h3>
-        <p>AI-Native Training. 2 dias live, formato turma. Comunidade por 3 meses. Para líderes.</p>
+        <p>AI-Native Training. 2 dias live, formato turma. Comunidade por 3 meses. Próxima turma: Agosto 2026.</p>
+        <div class="svc-link">Saiba mais →</div>
+      </a>
+      <a href="/diagnostic" class="svc" style="text-decoration:none;">
+        <div class="svc-tag">Para todos</div>
+        <h3>diagnostic</h3>
+        <p>Três assessments. Descubra seu nível de fluência em AI, o nível do seu time, ou a maturidade da sua empresa.</p>
+        <div class="svc-link">Fazer diagnóstico →</div>
       </a>
     </div>
   </section>
 
   <hr class="divider">
 
+  <!-- TESTIMONIALS -->
   <section>
+    <div class="section-label">O que operadores dizem</div>
+    <div class="testimonials">
+      <div class="testimonial">
+        <blockquote>"Raro encontrar um programa executivo que respeita seu tempo e assume que você já passou do 101. Saí com um plano para acelerar transformação AI na minha organização."</blockquote>
+        <div class="attr">Aluno, AI-Native Training — turma piloto</div>
+      </div>
+      <div class="testimonial">
+        <blockquote>"Finalmente alguém que fala de AI com substância de engenharia, não com buzzword de consultoria. O diagnóstico de maturidade sozinho já vale o investimento."</blockquote>
+        <div class="attr">CTO, empresa de software — 200 pessoas</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ABOUT -->
+  <section class="about">
     <div class="section-label">Quem está por trás</div>
-    <div class="two-col">
-      <div class="about-text">
-        <h3>Fernanda Faria</h3>
-        <div class="role">CPTO, Zé Delivery (AB InBev)</div>
-        <p>Eu estive na sua cadeira. Como CPTO do Zé Delivery, operei a transição AI-native na prática — com restrições reais de budget, legado, resistência e prazos. Não sou consultora. Eu estou vivendo isso. Firsthand é onde eu ajudo outras lideranças a fazerem o mesmo.</p>
+    <h3>Fernanda Faria</h3>
+    <div class="role">CPTO, Zé Delivery (AB InBev) · Founder, firsthand</div>
+    <p>Eu estive na sua cadeira. Como CPTO do Zé Delivery, operei a transição AI-native na prática — com restrições reais de budget, legado, resistência cultural e prazos que não esperam. Não sou consultora. Eu estou vivendo isso. Firsthand é onde eu ajudo outras lideranças a fazerem o mesmo.</p>
+  </section>
+
+  <hr class="divider">
+
+  <!-- CONTACT -->
+  <section class="contact">
+    <div class="section-label">Vamos conversar</div>
+    <div class="contact-box">
+      <div class="field"><label>Nome</label><input type="text" placeholder="Seu nome"></div>
+      <div class="field"><label>Email</label><input type="email" placeholder="seu@email.com"></div>
+      <div class="field">
+        <label>No que podemos ajudar?</label>
+        <select>
+          <option>Selecione…</option>
+          <option>rewire — AI-Native Transformation</option>
+          <option>studio — AI Executive Coaching</option>
+          <option>cohort — AI-Native Training</option>
+          <option>diagnostic — AI Maturity Assessment</option>
+          <option>Não tenho certeza ainda</option>
+        </select>
       </div>
-      <div class="about-quote">
-        "A diferença entre as empresas que têm ganhos de 2x, 5x, 10x e as que só acumulam tokens não são as ferramentas — é o sistema."
+      <div class="field">
+        <label>Tamanho do time</label>
+        <select>
+          <option>Selecione…</option>
+          <option>1–10</option>
+          <option>11–50</option>
+          <option>51–200</option>
+          <option>201–1.000</option>
+          <option>1.000+</option>
+        </select>
       </div>
+      <div class="field"><label>Contexto rápido</label><textarea placeholder="Onde AI está funcionando e onde o sistema está travado?"></textarea></div>
+      <button class="btn">Enviar</button>
     </div>
   </section>
 
@@ -124,8 +251,11 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-mono">firsthand · 2026</div>
-    <div class="nav-links">
-      <a href="https://thecognitivelab.ai">the cognitive lab</a>
+    <div class="footer-links">
+      <a href="/rewire">rewire</a>
+      <a href="/studio">studio</a>
+      <a href="/cohort">cohort</a>
+      <a href="/diagnostic">diagnostic</a>
     </div>
   </div>
 </footer>
