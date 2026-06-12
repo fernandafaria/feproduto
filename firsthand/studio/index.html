@@ -1,71 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>studio — firsthand</title>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>studio · AI Executive Coaching · firsthand</title>
 <style>
-  :root { --bg: #08080c; --surface: #111118; --border: #1e1e2a; --text: #e5e5e9; --muted: #6b6b7b; --accent: #f5f5f5; --amber: #fbbf24; --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; --mono: 'JetBrains Mono', 'Fira Code', monospace; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-  .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
-  nav { position: fixed; top: 0; width: 100%; background: rgba(8,8,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 100; }
-  .nav-inner { max-width: 880px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
-  .nav-logo { font-family: var(--mono); font-size: 14px; color: var(--accent); text-decoration: none; }
-  .nav-back { font-size: 13px; color: var(--muted); text-decoration: none; }
-  .hero { padding: 160px 0 48px; }
-  .hero .tag { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--amber); margin-bottom: 16px; }
-  .hero h1 { font-size: 40px; font-weight: 600; letter-spacing: -1px; color: var(--accent); margin-bottom: 16px; }
-  .hero .sub { font-size: 18px; color: var(--muted); }
-  section { padding: 56px 0; }
-  .section-label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 24px; }
-  h2 { font-size: 22px; font-weight: 600; color: var(--accent); margin-bottom: 16px; }
-  p { font-size: 15px; color: var(--text); line-height: 1.7; }
-  ul { list-style: none; }
-  ul li { margin-bottom: 8px; padding-left: 16px; border-left: 2px solid var(--border); font-size: 15px; color: var(--text); }
-  .cta-section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 40px; text-align: center; margin: 56px 0 80px; }
-  .cta-section h2 { margin-bottom: 8px; }
-  .cta-section p { color: var(--muted); margin-bottom: 24px; }
-  .btn { display: inline-block; background: var(--accent); color: var(--bg); padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 14px; }
-  .btn:hover { opacity: 0.85; }
-  footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+:root{--bg:#FAFAFA;--surface:#FFF;--border:#E5E5E5;--text:#0A0A0A;--muted:#525252;--muted2:#737373;--accent:#0D9488;--amber:#D97706}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.container{max-width:720px;margin:0 auto;padding:0 24px}
+nav{display:flex;justify-content:center;align-items:center;gap:20px;padding:16px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;margin-bottom:60px}
+.nav-brand{font-family:'SF Mono','JetBrains Mono',monospace;font-size:15px;color:var(--text);text-decoration:none;letter-spacing:.5px}
+nav a{font-size:12px;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--text)}
+.hero{padding:0 0 48px}
+.hero .eyebrow{font-size:10px;color:var(--amber);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+.hero h1{font-size:32px;font-weight:700;color:var(--text);margin-bottom:12px;letter-spacing:-.3px}
+.hero .sub{font-size:15px;color:var(--muted);max-width:520px;line-height:1.6}
+.section-label{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:1.5px;margin:64px 0 16px}
+h2{font-size:22px;font-weight:600;color:var(--text);margin-bottom:12px}
+.lead{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+.how-item{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px 0;border-top:1px solid var(--border);align-items:start}
+.how-item:last-child{border-bottom:1px solid var(--border)}
+.how-num{font-family:'SF Mono','JetBrains Mono',monospace;font-size:14px;color:var(--amber);font-weight:600}
+.how-body h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+.how-body p{font-size:13px;color:var(--muted);line-height:1.5}
+.develops{padding:20px 0}
+.develops h4{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted2);margin-bottom:12px}
+.develops li{font-size:13px;color:var(--text);padding:6px 0;border-bottom:1px solid var(--border);list-style:none}
+.develops li:last-child{border-bottom:none}
+.cta-section{text-align:center;padding:64px 0 80px}
+.cta-section h3{font-size:20px;color:var(--text);margin-bottom:8px}
+.cta-section p{font-size:14px;color:var(--muted);margin-bottom:20px}
+.cta-section a{display:inline-block;font-size:12px;color:var(--amber);text-decoration:none;border:1px solid var(--amber);padding:8px 16px;border-radius:4px}
+footer{padding:40px 0;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:12px;color:var(--muted2)}
+footer a{color:var(--muted2);text-decoration:none}
 </style>
 </head>
 <body>
-<nav><div class="nav-inner"><a href="/" class="nav-logo">firsthand</a><a href="/" class="nav-back">← voltar</a></div></nav>
-<main class="container">
+<div class="container">
+<nav>
+  <a href="/" class="nav-brand">FIRST.HAND</a>
+  <a href="/rewire">rewire</a>
+  <a href="/studio" style="color:var(--text)">studio</a>
+  <a href="/cohort">cohort</a>
+  <a href="/diagnostic">diagnostic</a>
+</nav>
 
 <section class="hero">
-  <div class="tag">Para executivos</div>
-  <h1>studio</h1>
-  <p class="sub">AI Executive Coaching. Sessões 1:1 para liderança AI-native.</p>
+  <div class="eyebrow">AI Executive Coaching</div>
+  <h1>Executive fluency, matched to your seat.</h1>
+  <p class="sub">1:1 coaching for CPTOs, VPs of Engineering, VPs of Product, and CTOs. General fluency or peer coaching paired to your exact role. No generic content — every session is grounded in your real operating context.</p>
 </section>
 
-<section><div class="section-label">Como funciona</div>
+<div class="section-label">HOW IT WORKS</div>
+<div class="how-item"><div class="how-num">01</div><div class="how-body"><h4>Matched to your seat</h4><p>Sessions designed for your specific role. CPTO coaching is different from VP Product coaching. You work on your actual challenges, not hypotheticals.</p></div></div>
+<div class="how-item"><div class="how-num">02</div><div class="how-body"><h4>1:1 or small groups</h4><p>Individual sessions or groups of up to 3 executives at the same level. Weekly or bi-weekly. 60 minutes. Remote.</p></div></div>
+<div class="how-item"><div class="how-num">03</div><div class="how-body"><h4>Grounded in practice</h4><p>Your coach has operated in your seat. CPTO of Zé Delivery (AB InBev). Not theory — lived experience of AI-native transformation with real constraints.</p></div></div>
+
+<div class="section-label">WHAT YOU DEVELOP</div>
+<div class="develops">
   <ul>
-    <li><strong>Sessões 1:1</strong> ou pequeno grupo (até 3 executivos do mesmo nível).</li>
-    <li><strong>Pareado com seu cargo:</strong> CPTO, VP Engineering, VP Product, CTO.</li>
-    <li><strong>Foco:</strong> fluência de AI no seu contexto real de liderança — não conteúdo genérico.</li>
-    <li><strong>Frequência:</strong> semanal ou quinzenal. Online. 60 minutos.</li>
+    <li>Use AI visibly as a leader — model the behavior you want in your team.</li>
+    <li>Read and act on AI adoption metrics in your area.</li>
+    <li>Redesign leadership rituals for AI speed.</li>
+    <li>Build and present the AI business case to your board.</li>
+    <li>Navigate resistance, fear, and the internal politics of transformation.</li>
   </ul>
-</section>
-
-<section><div class="section-label">O que você desenvolve</div>
-  <ul>
-    <li>Usar AI visivelmente como líder — modelar o comportamento que você quer no time.</li>
-    <li>Ler e agir sobre métricas de adoção de AI na sua área.</li>
-    <li>Redesenhar rituais de liderança para AI speed.</li>
-    <li>Preparar e apresentar o business case de AI para o board.</li>
-    <li>Navegar resistência, medo e política interna da transformação.</li>
-  </ul>
-</section>
-
-<div class="cta-section">
-  <h2>Agende uma sessão</h2>
-  <p>Zero compromisso. Uma conversa para entender se faz sentido.</p>
-  <a href="mailto:fernanda@firsthand.dev" class="btn">Agendar →</a>
 </div>
 
-</main>
-<footer>firsthand</footer>
+<div class="cta-section">
+  <h3>Book a session.</h3>
+  <p>Zero commitment. A conversation to see if it makes sense.</p>
+  <a href="mailto:fernanda@firsthand.dev">TEXT US →</a>
+</div>
+</div>
+<footer><p><a href="/">firsthand</a> · AI-native transformation, firsthand. · 2026</p></footer>
 </body>
 </html>
