@@ -1,0 +1,12 @@
+name: firsthand
+region: nyc
+static_sites:
+  - name: site
+    github:
+      repo: fernandafaria/feproduto
+      branch: master
+      deploy_on_push: true
+    source_dir: firsthand
+    output_dir: /
+    routes:
+      - path: /
