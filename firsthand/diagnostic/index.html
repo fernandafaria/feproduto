@@ -1,47 +1,135 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Diagnostic — firsthand</title>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>diagnostic · AI Maturity Assessment · firsthand</title>
 <style>
-  :root {
-    --bg: #08080c; --surface: #111118; --border: #1e1e2a;
-    --text: #e5e5e9; --muted: #6b6b7b; --accent: #f5f5f5;
-    --green: #34d399; --amber: #fbbf24; --violet: #a78bfa;
-    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    --mono: 'JetBrains Mono', 'Fira Code', monospace;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-  .container { max-width: 880px; margin: 0 auto; padding: 0 24px; }
-  nav { position: fixed; top: 0; width: 100%; background: rgba(8,8,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 100; }
-  .nav-inner { max-width: 880px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
-  .nav-logo { font-family: var(--mono); font-size: 14px; color: var(--accent); text-decoration: none; }
-  .hero { padding: 160px 0 60px; text-align: center; }
-  .hero h1 { font-size: 40px; font-weight: 600; letter-spacing: -1px; color: var(--accent); margin-bottom: 16px; }
-  .hero p { font-size: 16px; color: var(--muted); max-width: 520px; margin: 0 auto; }
-  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 880px; margin: 0 auto 80px; padding: 0 24px; }
-  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 32px 28px; text-decoration: none; transition: all 0.2s; display: flex; flex-direction: column; }
-  .card-icon { font-family: var(--mono); font-size: 28px; margin-bottom: 16px; }
-  .card h3 { font-size: 17px; font-weight: 600; color: var(--accent); margin-bottom: 8px; }
-  .card p { font-size: 13px; color: var(--muted); line-height: 1.5; flex: 1; }
-  .card .time { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 16px; }
-  .card-you { border-color: var(--violet); } .card-you:hover { background: rgba(167,139,250,0.04); } .card-you .card-icon { color: var(--violet); }
-  .card-team { border-color: var(--amber); } .card-team:hover { background: rgba(251,191,36,0.04); } .card-team .card-icon { color: var(--amber); }
-  .card-company { border-color: var(--green); } .card-company:hover { background: rgba(52,211,153,0.04); } .card-company .card-icon { color: var(--green); }
-  footer { border-top: 1px solid var(--border); padding: 32px 0; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--muted); }
-  @media (max-width: 700px) { .cards { grid-template-columns: 1fr; } .hero h1 { font-size: 30px; } }
+:root{--bg:#FAFAFA;--surface:#FFF;--border:#E5E5E5;--text:#0A0A0A;--muted:#525252;--muted2:#737373;--green:#16A34A;--amber:#D97706;--red:#DC2626;--accent:#0D9488;--violet:#7C3AED}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.55}
+.container{max-width:720px;margin:0 auto;padding:0 24px}
+
+nav{display:flex;justify-content:center;align-items:center;gap:20px;padding:16px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;margin-bottom:60px}
+.nav-brand{font-family:'SF Mono','JetBrains Mono',monospace;font-size:15px;color:var(--text);text-decoration:none;letter-spacing:.5px}
+.nav-brand .dot{color:var(--muted2)}
+nav a{font-size:12px;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--text)}
+
+.hero{padding:0 0 48px;text-align:center}
+.hero .eyebrow{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+.hero h1{font-size:32px;font-weight:700;color:var(--text);margin-bottom:12px;letter-spacing:-.3px}
+.hero .sub{font-size:15px;color:var(--muted);max-width:480px;margin:0 auto;line-height:1.6}
+
+.cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:64px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:24px;text-decoration:none;transition:all .15s;display:flex;flex-direction:column}
+.card:hover{border-color:var(--accent);box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.card-icon{font-size:24px;margin-bottom:14px}
+.card h4{font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px}
+.card p{font-size:12px;color:var(--muted);line-height:1.5;flex:1}
+.card .card-meta{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px;margin-top:12px}
+
+.card-you{border-color:var(--violet)}.card-you:hover{border-color:var(--violet);box-shadow:0 2px 8px rgba(124,58,237,.08)}.card-you .card-icon{color:var(--violet)}
+.card-team{border-color:var(--amber)}.card-team:hover{border-color:var(--amber);box-shadow:0 2px 8px rgba(217,119,6,.08)}.card-team .card-icon{color:var(--amber)}
+.card-company{border-color:var(--green)}.card-company:hover{border-color:var(--green);box-shadow:0 2px 8px rgba(22,163,74,.08)}.card-company .card-icon{color:var(--green)}
+
+.section-label{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:16px}
+h2{font-size:20px;font-weight:600;color:var(--text);margin-bottom:8px}
+.lead{font-size:14px;color:var(--muted);margin-bottom:20px;line-height:1.6}
+
+.maturity-levels{border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:12px}
+.maturity-levels .ml-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.maturity-levels .ml-num{font-family:'SF Mono','JetBrains Mono',monospace;font-size:16px;font-weight:600;color:var(--accent)}
+.maturity-levels .ml-title{font-size:14px;font-weight:600;color:var(--text)}
+.maturity-levels p{font-size:12px;color:var(--muted);line-height:1.5}
+
+.cta-section{text-align:center;padding:64px 0 80px}
+.cta-section h3{font-size:20px;color:var(--text);margin-bottom:8px}
+.cta-section p{font-size:14px;color:var(--muted);margin-bottom:20px}
+.cta-section a{display:inline-block;font-size:12px;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:8px 16px;border-radius:4px}
+
+footer{padding:40px 0;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:12px;color:var(--muted2)}
+footer a{color:var(--muted2);text-decoration:none}
+@media(max-width:640px){.cards{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<nav><div class="nav-inner"><a href="/" class="nav-logo">firsthand</a></div></nav>
-<section class="hero"><h1>Diagnostic</h1><p>Três assessments para três momentos. Escolha o seu.</p></section>
+<div class="container">
+
+<nav>
+  <a href="/" class="nav-brand">FIRST<span class="dot">.</span>HAND</a>
+  <a href="/rewire">rewire</a>
+  <a href="/studio">studio</a>
+  <a href="/cohort">cohort</a>
+  <a href="/diagnostic" style="color:var(--text)">diagnostic</a>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">AI Maturity Assessment</div>
+  <h1>Where are you on the AI Maturity Map?</h1>
+  <p class="sub">Three diagnostics for three moments — built on the N1→N5 framework from Comp.vc. Free. No email required.</p>
+</section>
+
 <div class="cards">
-  <a href="/diagnostic/you" class="card card-you"><div class="card-icon">◈</div><h3>Para você</h3><p>Executivo individual. Descubra seu nível de fluência em AI como líder.</p><div class="time">4 minutos</div></a>
-  <a href="/diagnostic/team" class="card card-team"><div class="card-icon">▣</div><h3>Para seu time</h3><p>Distribua para funcionários. Entenda o nível coletivo e os bloqueadores.</p><div class="time">3 minutos</div></a>
-  <a href="/diagnostic/company" class="card card-company"><div class="card-icon">◉</div><h3>Para sua empresa</h3><p>Diagnóstico organizacional. Avalie 5 áreas da sua empresa.</p><div class="time">7 minutos</div></a>
+  <a href="/diagnostic/you" class="card card-you">
+    <div class="card-icon">◈</div>
+    <h4>For you.</h4>
+    <p>Individual executive. Your AI leadership fluency — how you model, measure, and drive adoption.</p>
+    <div class="card-meta">4 minutes</div>
+  </a>
+  <a href="/diagnostic/team" class="card card-team">
+    <div class="card-icon">▣</div>
+    <h4>For your team.</h4>
+    <p>Distribute to employees. Understand collective fluency and blockers preventing adoption.</p>
+    <div class="card-meta">3 minutes</div>
+  </a>
+  <a href="/diagnostic/company" class="card card-company">
+    <div class="card-icon">◉</div>
+    <h4>For your company.</h4>
+    <p>Organizational maturity. Culture, operating model, roles, metrics, and system readiness.</p>
+    <div class="card-meta">7 minutes</div>
+  </a>
 </div>
-<footer>firsthand</footer>
+
+<div class="section-label">THE FRAMEWORK</div>
+<h2>AI-native in 5 levels.</h2>
+<p class="lead">The AI Maturity Map (Comp.vc) defines five qualitatively distinct stages. Each level demands a fundamentally different direction — not just incremental improvement. Applied by area, not to the whole organization.</p>
+
+<div class="maturity-levels">
+  <div class="ml-header"><span class="ml-num">N1</span><span class="ml-title">Individual Productivity</span></div>
+  <p>People use AI to optimize personal workflows. Some execute processes with higher efficiency. Trap: "More tokens = more AI-native."</p>
+</div>
+<div class="maturity-levels">
+  <div class="ml-header"><span class="ml-num">N2</span><span class="ml-title">Team Productivity</span></div>
+  <p>Shared agentic tools in human-designed workflows. An AI solution exists for most operational tasks. Trap: "More agents = more AI-native."</p>
+</div>
+<div class="maturity-levels">
+  <div class="ml-header"><span class="ml-num">N3</span><span class="ml-title">Contextualized Operating System</span></div>
+  <p>A single agentic layer executes work within human criteria. One person can operationalize an entire area. Trap: "Connecting more sources = more accurate."</p>
+</div>
+<div class="maturity-levels">
+  <div class="ml-header"><span class="ml-num">N4</span><span class="ml-title">Decision Intelligence</span></div>
+  <p>An agentic layer makes decisions based on human learning. Decision quality converges to the best human judgment. Trap: "More feedback = better."</p>
+</div>
+<div class="maturity-levels">
+  <div class="ml-header"><span class="ml-num">N5</span><span class="ml-title">Adaptive Intelligence</span></div>
+  <p>Autonomous learning from business outcomes. Results improve without human intervention. Not yet empirically observed at scale.</p>
+</div>
+
+<div class="section-label" style="margin-top:48px">THE KEY INSIGHT</div>
+<h2>Work backwards. Close the loop.</h2>
+<p class="lead">The building blocks that sustain N4 <strong>do not emerge from optimizing N1 or N2.</strong> They must be designed from Day 0 for the target level. And the element that separates the largest advances: the closed loop. The system's output produces a signal that returns and modifies future behavior. Open loops scale execution. Closed loops scale quality.</p>
+
+<div class="cta-section">
+  <h3>Find your level.</h3>
+  <p>Three diagnostics. No email required. Results in minutes.</p>
+  <div style="display:flex;gap:12px;justify-content:center">
+    <a href="/diagnostic/you">FOR YOU →</a>
+    <a href="/diagnostic/team">FOR YOUR TEAM →</a>
+    <a href="/diagnostic/company">FOR YOUR COMPANY →</a>
+  </div>
+</div>
+
+</div>
+<footer><p><a href="/">firsthand</a> · AI-native transformation, firsthand. · 2026</p></footer>
 </body>
 </html>

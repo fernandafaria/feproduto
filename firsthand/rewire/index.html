@@ -1,84 +1,173 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>rewire — firsthand</title>
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>rewire · AI-Native Transformation · firsthand</title>
 <style>
-  :root { --bg: #08080c; --surface: #111118; --border: #1e1e2a; --text: #e5e5e9; --muted: #6b6b7b; --accent: #f5f5f5; --violet: #a78bfa; --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; --mono: 'JetBrains Mono', 'Fira Code', monospace; }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--bg); color: var(--text); font-family: var(--font); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-  .container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
-  nav { position: fixed; top: 0; width: 100%; background: rgba(8,8,12,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); z-index: 100; }
-  .nav-inner { max-width: 880px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
-  .nav-logo { font-family: var(--mono); font-size: 14px; color: var(--accent); text-decoration: none; }
-  .nav-back { font-size: 13px; color: var(--muted); text-decoration: none; }
-  .hero { padding: 160px 0 48px; }
-  .hero .tag { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--violet); margin-bottom: 16px; }
-  .hero h1 { font-size: 40px; font-weight: 600; letter-spacing: -1px; color: var(--accent); margin-bottom: 16px; }
-  .hero .sub { font-size: 18px; color: var(--muted); }
-  section { padding: 56px 0; }
-  .section-label { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); margin-bottom: 24px; }
-  h2 { font-size: 22px; font-weight: 600; color: var(--accent); margin-bottom: 16px; }
-  p, li { font-size: 15px; color: var(--text); line-height: 1.7; }
-  ul { list-style: none; }
-  ul li { margin-bottom: 8px; padding-left: 16px; border-left: 2px solid var(--border); }
-  .pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .pillar { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 20px; }
-  .pillar h4 { font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
-  .pillar p { font-size: 13px; color: var(--muted); }
-  .cta-section { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 40px; text-align: center; margin: 56px 0 80px; }
-  .cta-section h2 { margin-bottom: 8px; }
-  .cta-section p { color: var(--muted); margin-bottom: 24px; }
-  .btn { display: inline-block; background: var(--accent); color: var(--bg); padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 14px; }
-  .btn:hover { opacity: 0.85; }
-  footer { border-top: 1px solid var(--border); padding: 28px 0; text-align: center; font-family: var(--mono); font-size: 12px; color: var(--muted); }
-  @media (max-width: 600px) { .pillars { grid-template-columns: 1fr; } .hero h1 { font-size: 30px; } }
+:root{--bg:#FAFAFA;--surface:#FFF;--border:#E5E5E5;--text:#0A0A0A;--muted:#525252;--muted2:#737373;--green:#16A34A;--amber:#D97706;--red:#DC2626;--accent:#0D9488;--violet:#7C3AED}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.container{max-width:720px;margin:0 auto;padding:0 24px}
+
+nav{display:flex;justify-content:center;align-items:center;gap:20px;padding:16px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;margin-bottom:60px}
+.nav-brand{font-family:'SF Mono','JetBrains Mono',monospace;font-size:15px;color:var(--text);text-decoration:none;letter-spacing:.5px}
+.nav-brand .dot{color:var(--muted2)}
+nav a{font-size:12px;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--text)}
+
+.hero{padding:0 0 48px}
+.hero .eyebrow{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+.hero h1{font-size:32px;font-weight:700;color:var(--text);margin-bottom:12px;letter-spacing:-.3px}
+.hero .sub{font-size:16px;color:var(--muted);line-height:1.6}
+
+.section-label{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:1.5px;margin:64px 0 20px}
+h2{font-size:22px;font-weight:600;color:var(--text);margin-bottom:12px}
+.lead{font-size:15px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+
+/* LEVELS */
+.levels{margin-bottom:48px}
+.level{border-top:1px solid var(--border);padding:20px 0;display:grid;grid-template-columns:80px 1fr;gap:16px;align-items:start}
+.level:last-child{border-bottom:1px solid var(--border)}
+.level-num{font-family:'SF Mono','JetBrains Mono',monospace;font-size:28px;font-weight:600;color:var(--accent);line-height:1}
+.level-body h4{font-size:16px;font-weight:600;color:var(--text);margin-bottom:4px}
+.level-body p{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:4px}
+.level-body .level-trap{font-size:12px;color:var(--muted2);font-style:italic}
+.level-body .level-trap::before{content:'⚠ '}
+
+/* PRINCIPLES */
+.principle{border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:12px}
+.principle h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+.principle p{font-size:13px;color:var(--muted);line-height:1.5}
+.principle .highlight{color:var(--accent);font-weight:500}
+
+/* HOW IT WORKS */
+.how-item{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px 0;border-top:1px solid var(--border);align-items:start}
+.how-item:last-child{border-bottom:1px solid var(--border)}
+.how-num{font-family:'SF Mono','JetBrains Mono',monospace;font-size:14px;color:var(--accent);font-weight:600}
+.how-body h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+.how-body p{font-size:13px;color:var(--muted);line-height:1.5}
+
+.cta-section{text-align:center;padding:64px 0 80px}
+.cta-section h3{font-size:20px;color:var(--text);margin-bottom:8px}
+.cta-section p{font-size:14px;color:var(--muted);margin-bottom:20px}
+.cta-section a{display:inline-block;font-size:12px;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:8px 16px;border-radius:4px}
+
+footer{padding:40px 0;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:12px;color:var(--muted2)}
+footer a{color:var(--muted2);text-decoration:none}
 </style>
 </head>
 <body>
-<nav><div class="nav-inner"><a href="/" class="nav-logo">firsthand</a><a href="/" class="nav-back">← voltar</a></div></nav>
-<main class="container">
+<div class="container">
+
+<nav>
+  <a href="/" class="nav-brand">FIRST<span class="dot">.</span>HAND</a>
+  <a href="/rewire" style="color:var(--text)">rewire</a>
+  <a href="/studio">studio</a>
+  <a href="/cohort">cohort</a>
+  <a href="/diagnostic">diagnostic</a>
+</nav>
 
 <section class="hero">
-  <div class="tag">Para empresas</div>
-  <h1>rewire</h1>
-  <p class="sub">AI-Native Transformation. Do diagnóstico ao novo operating model em 90 dias.</p>
+  <div class="eyebrow">AI-Native Transformation</div>
+  <h1>rewire your company.</h1>
+  <p class="sub">Whole-company transformation that starts where the work is most technical, then moves through GTM, ops, finance, and leadership. Based on the AI Maturity Map (N1→N5) — a framework built from observing the world's most advanced AI adoptions.</p>
 </section>
 
-<section>
-  <div class="section-label">Como funciona</div>
-  <ul>
-    <li><strong>Semana 0:</strong> AI Maturity Assessment. Diagnóstico N1→N5 por área da sua empresa.</li>
-    <li><strong>Dia 1–2:</strong> Imersão com a liderança. 8 módulos, 2 firesides, workshops por área.</li>
-    <li><strong>90 dias:</strong> Acompanhamento com check-ins quinzenais e revisões mensais.</li>
-  </ul>
-</section>
+<div class="section-label">THE AI MATURITY MAP</div>
+<h2>AI-native in 5 levels.</h2>
+<p class="lead">Each level represents a qualitatively different role for AI in how an area operates. Applied per area — not to the whole organization. Different areas coexist at different levels.</p>
 
-<section>
-  <div class="section-label">O sistema</div>
-  <div class="pillars">
-    <div class="pillar"><h4>01 Workflows</h4><p>O que agentes executam e o que humanos mantêm.</p></div>
-    <div class="pillar"><h4>02 System Readiness</h4><p>Contexto, docs, dados e feedback loops para agentes.</p></div>
-    <div class="pillar"><h4>03 Rituais</h4><p>Redesenhar como o trabalho é priorizado e revisado.</p></div>
-    <div class="pillar"><h4>04 Roles</h4><p>Redefinir papéis quando qualquer pessoa pode buildar.</p></div>
-    <div class="pillar"><h4>05 Métricas</h4><p>Medir adoção com novos padrões de velocidade e qualidade.</p></div>
-    <div class="pillar"><h4>06 Leadership</h4><p>Como executivos modelam e reforçam o novo padrão.</p></div>
+<div class="levels">
+  <div class="level">
+    <div class="level-num">N1</div>
+    <div class="level-body">
+      <h4>AI as Individual Productivity</h4>
+      <p>People use AI to optimize personal workflows. Some people execute the same processes with much higher efficiency.</p>
+      <div class="level-trap">Treating token usage as a success metric. "More tokens = more AI-native."</div>
+    </div>
   </div>
-</section>
-
-<section>
-  <div class="section-label">Formato</div>
-  <p>In-company. Turmas de 10–40 líderes. Presencial ou online. Inglês ou português.</p>
-</section>
-
-<div class="cta-section">
-  <h2>Vamos conversar</h2>
-  <p>Agende uma call para discutir o diagnóstico da sua empresa.</p>
-  <a href="mailto:fernanda@firsthand.dev" class="btn">Agendar →</a>
+  <div class="level">
+    <div class="level-num">N2</div>
+    <div class="level-body">
+      <h4>AI as Team Productivity</h4>
+      <p>Shared agentic tools used in human-designed workflows. An AI solution exists for nearly every operational task.</p>
+      <div class="level-trap">Counting agents and skills built. "More agents = more AI-native."</div>
+    </div>
+  </div>
+  <div class="level">
+    <div class="level-num">N3</div>
+    <div class="level-body">
+      <h4>AI as Contextualized Operating System</h4>
+      <p>A single agentic layer executes any work within human-defined criteria. One person can operationalize an entire area's work.</p>
+      <div class="level-trap">Treating all data sources the same. "Connecting more sources = more accurate."</div>
+    </div>
+  </div>
+  <div class="level">
+    <div class="level-num">N4</div>
+    <div class="level-body">
+      <h4>AI as Decision Intelligence</h4>
+      <p>An agentic layer makes decisions based on human learning and executes them. Decision quality converges to the level of the best human judgment.</p>
+      <div class="level-trap">Giving equal weight to all human feedback. "More feedback = better."</div>
+    </div>
+  </div>
+  <div class="level">
+    <div class="level-num">N5</div>
+    <div class="level-body">
+      <h4>AI as Adaptive Intelligence</h4>
+      <p>An agentic layer makes the best decisions via autonomous learning. Area results improve month after month without human intervention.</p>
+      <div class="level-trap">N5 has not yet been empirically observed at scale.</div>
+    </div>
+  </div>
 </div>
 
-</main>
-<footer>firsthand</footer>
+<div class="section-label">PRINCIPLES</div>
+<h2>How we think about maturity.</h2>
+
+<div class="principle">
+  <h4>Work backwards, not stepwise.</h4>
+  <p><span class="highlight">The building blocks that sustain N4 do not emerge from optimizing N1 or N2.</span> They must be designed from Day 0 for the target level. Organizations that build agents piecemeal often face massive rework. The right question: <em>"What is the target level for this area, and which of that level's building blocks should be assembled now?"</em></p>
+</div>
+<div class="principle">
+  <h4>Think by area, not by the whole organization.</h4>
+  <p>Different areas (Engineering, Product, HR, Finance, Sales) mature at different paces. Treat each as an independent track with its own target level, timeline, and priorities.</p>
+</div>
+<div class="principle">
+  <h4>Close the loop from Day 0.</h4>
+  <p>Most organizations operate in <span class="highlight">open loops</span>: agents produce outputs, nothing returns. Every quality improvement requires manual intervention. <span class="highlight">Closed loops scale quality.</span> The system's output produces an observable signal that returns and modifies future behavior. At N4, that signal is human judgment on each recommendation (approve/edit/reject).</p>
+</div>
+
+<div class="section-label">HOW IT WORKS</div>
+<h2>The rewire engagement.</h2>
+
+<div class="how-item">
+  <div class="how-num">01</div>
+  <div class="how-body"><h4>AI Maturity Assessment</h4><p>Week 0. Diagnostic N1→N5 by area. We map where each function stands and define the target level. Delivered as a report you take to your board.</p></div>
+</div>
+<div class="how-item">
+  <div class="how-num">02</div>
+  <div class="how-body"><h4>Immersion</h4><p>2 days with your leadership team. 8 modules, 2 fireside chats, workshops by area. You leave with a Transformation Roadmap — 3 initiatives, metrics, blockers, and an executive pitch.</p></div>
+</div>
+<div class="how-item">
+  <div class="how-num">03</div>
+  <div class="how-body"><h4>90-Day Follow-Through</h4><p>Bi-weekly check-ins, monthly reviews. We stay in the trenches until the system is installed. Not a deck. Not a certificate. A working operating model.</p></div>
+</div>
+
+<div class="section-label">THE SIX PILLARS</div>
+<h2>What we install.</h2>
+<div class="how-item"><div class="how-num">01</div><div class="how-body"><h4>Workflows</h4><p>Define what work agents do, what humans keep, and where review lives across functions.</p></div></div>
+<div class="how-item"><div class="how-num">02</div><div class="how-body"><h4>System Readiness</h4><p>Ensure shared context, docs, permissions, data, and feedback loops agents need to work safely.</p></div></div>
+<div class="how-item"><div class="how-num">03</div><div class="how-body"><h4>Rituals</h4><p>How work gets prioritized, planned, and reviewed. Remove what was created for a different speed of work.</p></div></div>
+<div class="how-item"><div class="how-num">04</div><div class="how-body"><h4>Roles</h4><p>Redefine roles when anyone can build. Uplevel your best builders and remove friction.</p></div></div>
+<div class="how-item"><div class="how-num">05</div><div class="how-body"><h4>Metrics</h4><p>Measure how AI adoption changes the company. New standards of velocity and quality.</p></div></div>
+<div class="how-item"><div class="how-num">06</div><div class="how-body"><h4>Leadership Skills</h4><p>How execs inspect the work, model new behavior, and reinforce the pattern across the company.</p></div></div>
+
+<div class="cta-section">
+  <h3>Ready to rewire?</h3>
+  <p>Tell us where AI is working and where the system is stuck.</p>
+  <a href="mailto:fernanda@firsthand.dev">TEXT US →</a>
+</div>
+
+</div>
+<footer><p><a href="/">firsthand</a> · AI-native transformation, firsthand. · 2026</p></footer>
 </body>
 </html>
