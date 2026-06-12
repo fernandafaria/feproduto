@@ -42,7 +42,7 @@ def route_after_editor(state: dict) -> Literal["end", "write"]:
         return "write"
 
 
-def build_graph() -> StateGraph:
+def build_book_writer_graph() -> StateGraph:
     """Constroi o StateGraph do pipeline de escrita.
 
     Pipeline: research → strategy → write → copyedit → editor → [end|write]
@@ -70,6 +70,10 @@ def build_graph() -> StateGraph:
     return workflow
 
 
+# Alias para compatibilidade
+build_graph = build_book_writer_graph
+
+
 def run_pipeline(
     chapter_num: int = 7,
     max_revisions: int = 3,
@@ -85,6 +89,8 @@ def run_pipeline(
     Returns:
         Estado final do grafo com chapter_draft, draft_path, etc.
     """
+    from datetime import datetime
+
     info = get_chapter_info(chapter_num)
 
     if verbose:
@@ -95,7 +101,7 @@ def run_pipeline(
         print(f"  Max revisoes: {max_revisions}")
         print(f"{'='*60}\n")
 
-    workflow = build_graph()
+    workflow = build_book_writer_graph()
     graph = workflow.compile(checkpointer=MemorySaver())
 
     initial_state = {
@@ -119,10 +125,12 @@ def run_pipeline(
         decision = final_state.get("editor_decision", "?")
         path = final_state.get("draft_path", "?")
         revs = final_state.get("revision_count", 0)
+        draft_len = len(final_state.get("chapter_draft", ""))
         print(f"\n{'='*60}")
         print(f"  PIPELINE CONCLUIDO")
         print(f"  Decisao: {decision}")
         print(f"  Revisoes: {revs}")
+        print(f"  Tamanho do draft: {draft_len} caracteres")
         print(f"  Arquivo: {path}")
         print(f"{'='*60}\n")
 
