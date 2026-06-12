@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The AI-Native Maturity Framework · firsthand</title>
+<style>
+:root{--bg:#FAFAFA;--surface:#FFF;--border:#E5E5E5;--text:#0A0A0A;--muted:#525252;--muted2:#737373;--green:#16A34A;--amber:#D97706;--red:#DC2626;--accent:#0D9488}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+.container{max-width:720px;margin:0 auto;padding:0 24px}
+
+nav{display:flex;justify-content:center;align-items:center;gap:20px;padding:16px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;margin-bottom:60px}
+.nav-brand{font-family:'SF Mono','JetBrains Mono',monospace;font-size:15px;color:var(--text);text-decoration:none;letter-spacing:.5px}
+nav a{font-size:12px;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--text)}
+
+.hero{padding:0 0 48px;text-align:center}
+.hero .eyebrow{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+.hero h1{font-size:32px;font-weight:700;color:var(--text);margin-bottom:12px;letter-spacing:-.3px}
+.hero .sub{font-size:15px;color:var(--muted);max-width:520px;margin:0 auto;line-height:1.6}
+
+.section-label{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:1.5px;margin:64px 0 16px}
+h2{font-size:22px;font-weight:600;color:var(--text);margin-bottom:12px}
+.lead{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.6}
+
+/* LEVEL CARD */
+.level{margin-bottom:20px;border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.level-header{padding:20px 24px;display:flex;justify-content:space-between;align-items:baseline;cursor:pointer}
+.level-header:hover{background:var(--surface)}
+.level-num{font-family:'SF Mono','JetBrains Mono',monospace;font-size:18px;font-weight:600;color:var(--accent);min-width:40px}
+.level-name{font-size:16px;font-weight:600;color:var(--text);flex:1;margin-left:12px}
+.level-signal{font-size:11px;color:var(--muted2);text-align:right;max-width:180px;line-height:1.4}
+.level-body{display:none;padding:0 24px 24px;border-top:1px solid var(--border)}
+.level-body.open{display:block}
+.level-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:16px 0}
+.level-cell{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:12px 14px}
+.level-cell .cell-label{font-size:9px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted2);margin-bottom:4px}
+.level-cell .cell-val{font-size:12px;color:var(--text);line-height:1.4}
+.level-test{font-size:13px;color:var(--red);margin-top:8px;padding:8px 12px;background:rgba(220,38,38,.05);border-radius:4px}
+.level-test strong{color:var(--text)}
+.level-false{font-size:11px;color:var(--muted2);margin-top:6px}
+
+/* PRINCIPLES */
+.principle{border:1px solid var(--border);border-radius:6px;padding:20px 24px;margin-bottom:12px}
+.principle h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+.principle p{font-size:13px;color:var(--muted);line-height:1.5}
+
+.cta-section{text-align:center;padding:64px 0 80px}
+.cta-section h3{font-size:20px;color:var(--text);margin-bottom:8px}
+.cta-section a{display:inline-block;font-size:12px;color:var(--accent);text-decoration:none;border:1px solid var(--border);padding:8px 16px;border-radius:4px}
+
+footer{padding:40px 0;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:12px;color:var(--muted2)}
+
+@media(max-width:640px){.level-grid{grid-template-columns:1fr}.level-signal{display:none}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<nav>
+  <a href="/" class="nav-brand">FIRST.HAND</a>
+  <a href="/rewire">rewire</a>
+  <a href="/studio">studio</a>
+  <a href="/cohort">cohort</a>
+  <a href="/diagnostic">diagnostic</a>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">The AI-Native Maturity Framework</div>
+  <h1>Six levels of organizational AI autonomy.</h1>
+  <p class="sub">A unified framework merging Comp.vc's AI Maturity Map with Ann Miura-Ko's autonomy levels. Define where you are, what AI can see and do, who can extend the system, and how your organization has changed.</p>
+</section>
+
+<div class="section-label">SOURCES</div>
+<h2>Built from two complementary frameworks.</h2>
+<p class="lead"><strong>Comp.vc AI Maturity Map</strong> — Five levels (N1–N5) defining the qualitatively distinct roles AI plays in an organization. Core principles: work backwards, think by area, close the loop from Day 0.<br><br><strong>Ann Miura-Ko's Autonomy Levels</strong> — Six levels (L0–L5) based on four diagnostic questions: What can AI see? What can AI do? Who can extend the system? How has the organization changed? Field-tested across startups and scaled companies like Ramp.</p>
+
+<div class="section-label">THE SIX LEVELS</div>
+<h2>Click each level to expand.</h2>
+
+<div class="level" id="l0">
+  <div class="level-header" onclick="document.getElementById('l0-body').classList.toggle('open')">
+    <span class="level-num">L0</span><span class="level-name">AI as Theater</span><span class="level-signal">Speeches ≠ adoption</span>
+  </div>
+  <div class="level-body" id="l0-body">
+    <div class="level-grid">
+      <div class="level-cell"><div class="cell-label">See</div><div class="cell-val">Nothing structured. Knowledge lives in people's heads, undocumented meetings, unreadable SaaS tools.</div></div>
+      <div class="level-cell"><div class="cell-label">Do</div><div class="cell-val">Nothing of consequence. Maybe summarize if a human pastes a transcript.</div></div>
+      <div class="level-cell"><div class="cell-label">Extend</div><div class="cell-val">No one. AI is a personal, ungoverned tool.</div></div>
+      <div class="level-cell"><div class="cell-label">Org Change</div><div class="cell-val">None. Same meetings, same processes.</div></div>
+    </div>
+    <div class="level-test"><strong>Hard test:</strong> Can AI complete any recurring business process end-to-end?</div>
+    <div class="level-false">False positive: CEO speeches about AI while running the same meeting structures.</div>
+  </div>
+</div>
+
+<div class="level" id="l1">
+  <div class="level-header" onclick="document.getElementById('l1-body').classList.toggle('open')">
+    <span class="level-num">L1</span><span class="level-name">Personal Productivity</span><span class="level-signal">"80% use AI weekly" — meaningless</span>
+  </div>
+  <div class="level-body" id="l1-body">
+    <div class="level-grid">
+      <div class="level-cell"><div class="cell-label">See</div><div class="cell-val">Only what each individual feeds it. Private prompts. No organizational visibility.</div></div>
+      <div class="level-cell"><div class="cell-label">Do</div><div class="cell-val">Draft, summarize, brainstorm, code. No action on systems of record.</div></div>
+      <div class="level-cell"><div class="cell-label">Extend</div><div class="cell-val">Each user reinvents. Power-user workflows leave with the person.</div></div>
+      <div class="level-cell"><div class="cell-label">Org Change</div><div class="cell-val">None. Maybe a "Head of AI" hire buys some tools.</div></div>
+    </div>
+    <div class="level-test"><strong>Hard test:</strong> If your best AI user left tomorrow, would their workflow remain in the company?</div>
+    <div class="level-false">False positive: "80% of employees use AI weekly!" — probably true, completely meaningless.</div>
+  </div>
+</div>
+
+<div class="level" id="l2">
+  <div class="level-header" onclick="document.getElementById('l2-body').classList.toggle('open')">
+    <span class="level-num">L2</span><span class="level-name">Team Workflow</span><span class="level-signal">AI-enhanced silos ≠ AI-native org</span>
+  </div>
+  <div class="level-body" id="l2-body">
+    <div class="level-grid">
+      <div class="level-cell"><div class="cell-label">See</div><div class="cell-val">Shared context per team (claude.md, shared prompts, MCP integrations). AI sees within team boundaries.</div></div>
+      <div class="level-cell"><div class="cell-label">Do</div><div class="cell-val">Functional workflows: sales prospecting, support triage, code review. Bounded within a team's domain.</div></div>
+      <div class="level-cell"><div class="cell-label">Extend</div><div class="cell-val">Non-engineers use shared workflows within the team. Across teams, not really. Each function builds private stacks.</div></div>
+      <div class="level-cell"><div class="cell-label">Org Change</div><div class="cell-val">Functional efficiency gains. Hiring slows, org shape unchanged. Role boundaries intact.</div></div>
+    </div>
+    <div class="level-test"><strong>Hard test:</strong> Does this workflow cross team boundaries, or is every function building its own private AI stack?</div>
+    <div class="level-false">False positive: "We have AI workflows in every department." Collection of AI-enhanced silos ≠ AI-native organization.</div>
+  </div>
+</div>
+
+<div class="level" id="l3">
+  <div class="level-header" onclick="document.getElementById('l3-body').classList.toggle('open')">
+    <span class="level-num">L3</span><span class="level-name">Organizational Infrastructure</span><span class="level-signal">Capture ≠ legibility</span>
+  </div>
+  <div class="level-body" id="l3-body">
+    <div class="level-grid">
+      <div class="level-cell"><div class="cell-label">See</div><div class="cell-val">Whole org queryable. Cross-functional context accessible. Core systems of record exposed via APIs for agents to act.</div></div>
+      <div class="level-cell"><div class="cell-label">Do</div><div class="cell-val">Agents act across systems: update CRMs, open PRs, route tickets, reconcile invoices. Cross-functional but bounded.</div></div>
+      <div class="level-cell"><div class="cell-label">Extend</div><div class="cell-val">Non-engineers author shared skills. Sales packages call analysis. CX packages ticket investigation. Skills move horizontally.</div></div>
+      <div class="level-cell"><div class="cell-label">Org Change</div><div class="cell-val">Org chart materially different from 2023. Zero-PM teams. PM-as-agent-orchestrator. Role convergence into "builders." Token-maxing over headcount-maxing.</div></div>
+    </div>
+    <div class="level-test"><strong>Hard test:</strong> Can an agent answer, across systems: what shipped last sprint, who asked for it, what broke after launch, what customers said, and what the company should do next — without convening a cross-functional meeting?</div>
+    <div class="level-false">False positive: Landfill of meeting transcripts and dashboards with no synthesis. An inert archive is not an operating system.</div>
+  </div>
+</div>
+
+<div class="level" id="l4">
+  <div class="level-header" onclick="document.getElementById('l4-body').classList.toggle('open')">
+    <span class="level-num">L4</span><span class="level-name">Compounding Operating System</span><span class="level-signal">Closed loops scale quality</span>
+  </div>
+  <div class="level-body" id="l4-body">
+    <div class="level-grid">
+      <div class="level-cell"><div class="cell-label">See</div><div class="cell-val">Relationships between events, not just events. System maintains context. Agents update agents. Skills marketplace propagates wins. System learns what to surface.</div></div>
+      <div class="level-cell"><div class="cell-label">Do</div><div class="cell-val">Agents have policy-driven decision authority in scoped domains. Active removal of software blockers. Custom internal harnesses for core work.</div></div>
+      <div class="level-cell"><div class="cell-label">Extend</div><div class="cell-val">Non-engineers ship production internal tools. Finance builds contract reviewer. AE ships sales tool in under an hour. Engineering only for production review.</div></div>
+      <div class="level-cell"><div class="cell-label">Org Change</div><div class="cell-val">Hierarchy collapses toward "channel managers" of agent workflows. New archetype: agent-enabled builder. Explicit structural change — not just speed, shape.</div></div>
+    </div>
+    <div class="level-test"><strong>Hard test:</strong> Does the system get smarter with every decision, or does quality require constant manual intervention?</div>
+    <div class="level-false">False positive: "Human-in-the-loop" that's actually just governance (N3 with an extra review step), not learning (N4 with a closed loop).</div>
+  </div>
+</div>
+
+<div class="level" id="l5">
+  <div class="level-header" onclick="document.getElementById('l5-body').classList.toggle('open')">
+    <span class="level-num">L5</span><span class="level-name">Autonomous Organization</span><span class="level-signal">Not yet empirically observed</span>
+  </div>
+  <div class="level-body" id="l5-body">
+    <div class="level-grid">
+      <div class="level-cell"><div class="cell-label">See</div><div class="cell-val">Complete organizational awareness. System discovers its own blind spots. Autonomous learning from business outcomes.</div></div>
+      <div class="level-cell"><div class="cell-label">Do</div><div class="cell-val">AI makes and executes decisions autonomously. Results improve month after month without human intervention. Decision quality surpasses best human judgment.</div></div>
+      <div class="level-cell"><div class="cell-label">Extend</div><div class="cell-val">System self-extends. Agents create agents. Skills are generated, tested, and deployed without human authorship.</div></div>
+      <div class="level-cell"><div class="cell-label">Org Change</div><div class="cell-val">Organization as platform. Humans set values and constraints. AI operates within them. Role of humans: define what "good" means.</div></div>
+    </div>
+    <div class="level-test"><strong>Hard test:</strong> Does the company improve without any specific human intervention?</div>
+    <div class="level-false">This level has not been empirically observed at scale. Frameworks are speculative.</div>
+  </div>
+</div>
+
+<div class="section-label">THE DIAGNOSTIC QUESTIONS</div>
+<h2>Four questions to place any organization.</h2>
+<p class="lead">From Ann Miura-Ko. Answer these honestly — not aspirationally — to locate your company on the framework.</p>
+
+<div class="principle"><h4>1. What can AI see?</h4><p>The legibility of your company's work. Is it structured and queryable, or locked in people's heads and unreadable SaaS tools? <em>Capture is not legibility. An inert archive is not an operating system.</em></p></div>
+<div class="principle"><h4>2. What can AI do?</h4><p>The ability to act on systems of record — not just observe, not just draft. Can agents update CRMs, open PRs, reconcile invoices? <em>Summarizing meetings is not acting on systems.</em></p></div>
+<div class="principle"><h4>3. Who can extend the system?</h4><p>Broader authorship, not just engineers. Can a sales rep package call analysis? Can finance build a contract reviewer? <em>If only engineers can extend, the system doesn't scale.</em></p></div>
+<div class="principle"><h4>4. How has the organization changed?</h4><p>Not just speed — shape. Has the org chart changed materially from 2023? Have roles converged? Are you token-maxing over headcount-maxing? <em>Same org, same roles, same rituals, just faster = you're still at L1/L2.</em></p></div>
+
+<div class="section-label">THE PRINCIPLES</div>
+<h2>How to use the framework.</h2>
+
+<div class="principle"><h4>Work backwards, not stepwise.</h4><p><strong>The building blocks that sustain L4 do not emerge from optimizing L1 or L2.</strong> They must be designed from Day 0 for the target level. Ask: "What is the target level for this area, and which building blocks should be assembled now?"</p></div>
+<div class="principle"><h4>Think by area, not by the whole organization.</h4><p>Different areas (Engineering, Product, Sales, HR, Finance) mature at different paces. Treat each as an independent track with its own target level, timeline, and priorities.</p></div>
+<div class="principle"><h4>Close the loop from Day 0.</h4><p>Most organizations operate in open loops: agents produce outputs, nothing returns. Quality improvements require manual intervention. The element that separates the largest advances: the system's output produces an observable signal that returns and modifies future behavior. <strong>Open loops scale execution. Closed loops scale quality.</strong></p></div>
+
+<div class="cta-section">
+  <h3>Where are you?</h3>
+  <a href="/diagnostic">TAKE THE DIAGNOSTIC →</a>
+</div>
+
+</div>
+<footer><p>firsthand · AI-native transformation, firsthand. · 2026</p></footer>
+</body>
+</html>
