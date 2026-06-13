@@ -1,79 +1,114 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>studio · AI Executive Coaching · firsthand</title>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>studio · AI Executive Coaching · Post AI Company</title>
 <style>
-:root{--bg:#FAFAFA;--surface:#FFF;--border:#E5E5E5;--text:#0A0A0A;--muted:#525252;--muted2:#737373;--accent:#0D9488;--amber:#D97706}
+:root{--bg:#FAFAFA;--surface:#FFF;--border:#E5E5E5;--text:#0A0A0A;--muted:#525252;--muted2:#737373;--amber:#D97706;--accent:#0D9488}
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.55}
 .container{max-width:720px;margin:0 auto;padding:0 24px}
-nav{display:flex;justify-content:center;align-items:center;gap:20px;padding:16px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;margin-bottom:60px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0;border-bottom:1px solid var(--border);margin-bottom:80px}
 .nav-brand{font-family:'SF Mono','JetBrains Mono',monospace;font-size:15px;color:var(--text);text-decoration:none;letter-spacing:.5px}
-nav a{font-size:12px;color:var(--muted);text-decoration:none}
-nav a:hover{color:var(--text)}
-.hero{padding:0 0 48px}
+.nav-links{display:flex;gap:18px}
+.nav-links a{font-size:12px;color:var(--muted);text-decoration:none}
+.nav-links a:hover{color:var(--text)}
+section{padding:48px 0}
+.section-divider{width:100%;height:1px;background:var(--border)}
+.section-label{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;font-weight:500}
+h2{font-size:22px;font-weight:600;color:var(--text);margin-bottom:10px;line-height:1.3}
+h3{font-size:16px;font-weight:600;color:var(--text);margin-bottom:6px}
+p,li{font-size:14px;color:var(--muted);line-height:1.65}
+.lead{font-size:15px;color:var(--muted);margin-bottom:24px;line-height:1.6;max-width:520px}
+.hero{padding:0 0 24px}
 .hero .eyebrow{font-size:10px;color:var(--amber);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
-.hero h1{font-size:32px;font-weight:700;color:var(--text);margin-bottom:12px;letter-spacing:-.3px}
-.hero .sub{font-size:15px;color:var(--muted);max-width:520px;line-height:1.6}
-.section-label{font-size:10px;color:var(--muted2);text-transform:uppercase;letter-spacing:1.5px;margin:64px 0 16px}
-h2{font-size:22px;font-weight:600;color:var(--text);margin-bottom:12px}
-.lead{font-size:14px;color:var(--muted);margin-bottom:24px;line-height:1.6}
-.how-item{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:16px 0;border-top:1px solid var(--border);align-items:start}
-.how-item:last-child{border-bottom:1px solid var(--border)}
-.how-num{font-family:'SF Mono','JetBrains Mono',monospace;font-size:14px;color:var(--amber);font-weight:600}
-.how-body h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
-.how-body p{font-size:13px;color:var(--muted);line-height:1.5}
-.develops{padding:20px 0}
-.develops h4{font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted2);margin-bottom:12px}
-.develops li{font-size:13px;color:var(--text);padding:6px 0;border-bottom:1px solid var(--border);list-style:none}
-.develops li:last-child{border-bottom:none}
-.cta-section{text-align:center;padding:64px 0 80px}
-.cta-section h3{font-size:20px;color:var(--text);margin-bottom:8px}
-.cta-section p{font-size:14px;color:var(--muted);margin-bottom:20px}
+.hero h1{font-size:32px;font-weight:700;letter-spacing:-.3px;color:var(--text);margin-bottom:12px}
+.hero .sub{font-size:15px;color:var(--muted);max-width:560px;line-height:1.6}
+.seat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.seat-card{border:1px solid var(--border);border-radius:6px;padding:20px 24px}
+.seat-card h4{font-size:13px;font-weight:600;color:var(--text);margin-bottom:4px}
+.seat-card p{font-size:12px;color:var(--muted);line-height:1.5}
+.topic-item{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--border);align-items:start}
+.topic-item:last-child{border-bottom:1px solid var(--border)}
+.topic-num{font-family:'SF Mono','JetBrains Mono',monospace;font-size:14px;color:var(--amber);font-weight:600}
+.topic-body h4{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px}
+.topic-body p{font-size:13px;color:var(--muted)}
+.cta-section{text-align:center;padding:40px 0 80px}
+.cta-section h3{font-size:18px;margin-bottom:8px}
 .cta-section a{display:inline-block;font-size:12px;color:var(--amber);text-decoration:none;border:1px solid var(--amber);padding:8px 16px;border-radius:4px}
-footer{padding:40px 0;text-align:center;border-top:1px solid var(--border)}
-footer p{font-size:12px;color:var(--muted2)}
-footer a{color:var(--muted2);text-decoration:none}
+footer{padding:32px 0;text-align:center;border-top:1px solid var(--border)}
+footer p{font-size:11px;color:var(--muted2)}footer a{color:var(--muted2);text-decoration:none}
+@media(max-width:640px){.seat-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="container">
 <nav>
   <a href="/" class="nav-brand">POST AI COMPANY</a>
-  <a href="/rewire">rewire</a>
-  <a href="/studio" style="color:var(--text)">studio</a>
-  <a href="/cohort">cohort</a>
-  <a href="/diagnostic">diagnostic</a>
+  <div class="nav-links">
+    <a href="/rewire">rewire</a>
+    <a href="/studio" style="color:var(--text)">studio</a>
+    <a href="/cohort">cohort</a>
+    <a href="/diagnostic">diagnostic</a>
+  </div>
 </nav>
 
 <section class="hero">
   <div class="eyebrow">AI Executive Coaching</div>
   <h1>Executive fluency, matched to your seat.</h1>
-  <p class="sub">1:1 coaching for CPTOs, VPs of Engineering, VPs of Product, and CTOs. General fluency or peer coaching paired to your exact role. No generic content — every session is grounded in your real operating context.</p>
+  <p class="sub">1:1 coaching for leaders who need to operate at AI speed — not learn theory. Every session is grounded in your real operating context: the decisions you actually make, the team you actually lead, the board you actually report to.</p>
 </section>
 
-<div class="section-label">HOW IT WORKS</div>
-<div class="how-item"><div class="how-num">01</div><div class="how-body"><h4>Matched to your seat</h4><p>Sessions designed for your specific role. CPTO coaching is different from VP Product coaching. You work on your actual challenges, not hypotheticals.</p></div></div>
-<div class="how-item"><div class="how-num">02</div><div class="how-body"><h4>1:1 or small groups</h4><p>Individual sessions or groups of up to 3 executives at the same level. Weekly or bi-weekly. 60 minutes. Remote.</p></div></div>
-<div class="how-item"><div class="how-num">03</div><div class="how-body"><h4>Grounded in practice</h4><p>Your coach has operated in your seat. CPTO of Zé Delivery (AB InBev). Not theory — lived experience of AI-native transformation with real constraints.</p></div></div>
+<section>
+  <div class="section-label">YOUR SEAT</div>
+  <h2>Each seat has different questions. We match them.</h2>
+  <div class="seat-grid">
+    <div class="seat-card">
+      <h4>CPTO / CTO</h4>
+      <p>How AI changes your org chart, your build velocity, your relationship with the CEO and board. What to measure, what to stop measuring.</p>
+    </div>
+    <div class="seat-card">
+      <h4>VP Engineering</h4>
+      <p>Agent-ready codebases. Background agents in production. Career ladders for engineers who orchestrate rather than type.</p>
+    </div>
+    <div class="seat-card">
+      <h4>VP Product</h4>
+      <p>Roadmaps at AI speed. Prototyping with agents. When the PM becomes the builder. Feature prioritization when everything can be built.</p>
+    </div>
+    <div class="seat-card">
+      <h4>VP Design</h4>
+      <p>Judgment over production. AI-generated variants. Design systems that agents can use. The designer as craft editor.</p>
+    </div>
+  </div>
+</section>
 
-<div class="section-label">WHAT YOU DEVELOP</div>
-<div class="develops">
-  <ul>
-    <li>Use AI visibly as a leader — model the behavior you want in your team.</li>
-    <li>Read and act on AI adoption metrics in your area.</li>
-    <li>Redesign leadership rituals for AI speed.</li>
-    <li>Build and present the AI business case to your board.</li>
-    <li>Navigate resistance, fear, and the internal politics of transformation.</li>
-  </ul>
-</div>
+<hr class="section-divider">
+
+<section>
+  <div class="section-label">WHAT WE WORK ON</div>
+  <h2>Real topics from real sessions.</h2>
+  <div class="topic-item"><div class="topic-num">01</div><div class="topic-body"><h4>Model the behavior</h4><p>Use AI visibly in your leadership. Your team watches what you do, not what you say. We work on your actual workflows — status reviews, board prep, portfolio decisions.</p></div></div>
+  <div class="topic-item"><div class="topic-num">02</div><div class="topic-body"><h4>Read the metrics</h4><p>Which adoption numbers matter, which are vanity. How to build a dashboard your CFO understands and your board respects.</p></div></div>
+  <div class="topic-item"><div class="topic-num">03</div><div class="topic-body"><h4>Redesign the rituals</h4><p>Your weekly operating review, your planning cycle, your decision forums. What survives, what dies, what transforms.</p></div></div>
+  <div class="topic-item"><div class="topic-num">04</div><div class="topic-body"><h4>Navigate the politics</h4><p>Resistance from peers. Board skepticism. The "we're already doing AI" trap. Career risk. How to lead transformation without losing your job.</p></div></div>
+  <div class="topic-item"><div class="topic-num">05</div><div class="topic-body"><h4>Build the business case</h4><p>Not "AI is the future." Numbers: tokens vs headcount, throughput vs outcome, the cost of not moving. Priced in reais, for your board.</p></div></div>
+</section>
+
+<hr class="section-divider">
+
+<section>
+  <div class="section-label">FORMAT</div>
+  <h2>How it works.</h2>
+  <p style="margin-bottom:12px">1:1 or small groups (up to 3 at the same level). Weekly or bi-weekly. 60 minutes. Remote. No long-term commitment — start with a session and decide from there.</p>
+  <p>Your coach has operated in your seat. CPTO of Zé Delivery (AB InBev), Chief AI Officer at SyntheticPerson. Not theory — lived experience of AI-native transformation with real constraints: budget, legacy, resistance, and deadlines.</p>
+</section>
 
 <div class="cta-section">
   <h3>Book a session.</h3>
-  <p>Zero commitment. A conversation to see if it makes sense.</p>
-  <a href="mailto:fernanda@firsthand.dev">TEXT US →</a>
+  <a href="mailto:fernanda@postaicompany.com">TEXT US →</a>
 </div>
+
 </div>
-<footer><p><a href="/">Post AI Company</a> · AI-native transformation, firsthand. · 2026</p></footer>
+<footer><p>Post AI Company · AI-native transformation, firsthand. · 2026</p></footer>
 </body>
 </html>
