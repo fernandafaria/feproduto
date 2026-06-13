@@ -124,6 +124,16 @@ footer p{font-size:11px;color:var(--muted2)}footer a{color:var(--muted2);text-de
   .nav-links{gap:12px;font-size:11px}
   .op-header{flex-direction:column;text-align:center}
 }
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.diag{transition:box-shadow .3s ease}.diag:hover{box-shadow:0 2px 16px rgba(0,0,0,.04)}
+.path-card{transition:all .3s ease}.path-card:hover{transform:translateY(-1px)}
+.path-item{transition:all .25s ease}
+.subscribe button{transition:all .2s ease}.subscribe button:hover{opacity:.9;transform:scale(1.02)}
+.hero-cta{transition:all .2s ease}.hero-cta:hover{border-color:var(--accent);background:rgba(13,148,136,.04)}
+.contact-links a{transition:all .2s ease}
 </style>
 </head>
 <body>
@@ -146,7 +156,7 @@ footer p{font-size:11px;color:var(--muted2)}footer a{color:var(--muted2);text-de
     <a href="#talk" class="hero-cta">TEXT US →</a>
   </section>
 
-  <section>
+  <section class="reveal">
     <div class="section-label">THE METRIC THAT MATTERS</div>
     <h2>Revenue per employee: the number that separates pre-AI from post-AI.</h2>
     <div class="data-grid">
@@ -159,7 +169,7 @@ footer p{font-size:11px;color:var(--muted2)}footer a{color:var(--muted2);text-de
 
   <hr class="section-divider">
 
-  <section>
+  <section class="reveal">
     <div class="section-label">QUICK DIAGNOSTIC</div>
     <div class="diag">
       <span class="diag-path">~/diagnostic</span>
@@ -182,7 +192,7 @@ footer p{font-size:11px;color:var(--muted2)}footer a{color:var(--muted2);text-de
 
   <hr class="section-divider">
 
-  <section>
+  <section class="reveal">
     <div class="section-label">WHO THIS IS FOR</div>
     <h2>Two paths. One system.</h2>
     <p class="lead">Whether you're starting from zero or transforming from within.</p>
@@ -204,7 +214,7 @@ footer p{font-size:11px;color:var(--muted2)}footer a{color:var(--muted2);text-de
 
   <hr class="section-divider">
 
-  <section>
+  <section class="reveal">
     <div class="section-label">PATHS IN</div>
     <div class="paths-in">
       <a href="/rewire" class="path-item">
@@ -240,7 +250,7 @@ footer p{font-size:11px;color:var(--muted2)}footer a{color:var(--muted2);text-de
 
   <hr class="section-divider">
 
-  <section>
+  <section class="reveal">
     <div class="section-label">STAY SHARP</div>
     <h2>Get the signal. Skip the noise.</h2>
     <div class="subscribe">
@@ -256,7 +266,7 @@ footer p{font-size:11px;color:var(--muted2)}footer a{color:var(--muted2);text-de
 
   <hr class="section-divider">
 
-  <section>
+  <section class="reveal">
     <div class="section-label">THE OPERATOR</div>
     <div class="operator">
       <div class="op-header">
@@ -277,7 +287,7 @@ footer p{font-size:11px;color:var(--muted2)}footer a{color:var(--muted2);text-de
 
   <hr class="section-divider">
 
-  <section>
+  <section class="reveal">
     <div class="section-label" id="talk">LET'S CONNECT</div>
     <div class="contact-block">
       <h3>Tell us where AI is working and where the system is stuck.</h3>
@@ -292,5 +302,12 @@ footer p{font-size:11px;color:var(--muted2)}footer a{color:var(--muted2);text-de
 </div>
 
 <footer><p>Post AI Company · AI-native transformation, firsthand. · 2026</p></footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 </body>
 </html>
